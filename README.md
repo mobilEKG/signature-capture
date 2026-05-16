@@ -16,6 +16,7 @@ This repository contains the React/Vite app and the Cloudflare Workers Static As
 ## Index
 
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
 - [Image Processing Algorithm](#image-processing-algorithm)
 - [Development](#development)
@@ -34,6 +35,16 @@ This repository contains the React/Vite app and the Cloudflare Workers Static As
 - PNG download and clipboard copy
 - SPA routing on Cloudflare Workers Static Assets
 - Preview aliases for branch deployments
+
+## Screenshots
+
+### Mobile
+
+![Signature Capture mobile screenshot](./docs/screenshots/mobile-capture.png)
+
+### Desktop
+
+![Signature Capture desktop screenshot](./docs/screenshots/desktop-capture.png)
 
 ## Tech Stack
 
