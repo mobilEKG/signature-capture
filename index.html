@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icons/app-icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#0d1711" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Signature Capture web application" />
+    <meta property="og:title" content="Signature Capture" />
+    <meta property="og:description" content="Open-source browser app for turning a handwritten signature into a transparent PNG." />
+    <meta property="og:url" content="https://signature.codeant.studio/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://signature.codeant.studio/icons/icon-512x512.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Signature Capture" />
+    <meta name="twitter:description" content="Open-source browser app for turning a handwritten signature into a transparent PNG." />
+    <meta name="twitter:image" content="https://signature.codeant.studio/icons/icon-512x512.png" />
+    <title>Signature Capture</title>
+    <link rel="canonical" href="https://signature.codeant.studio/" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+  </head>
+  <body class="bg-metal">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then(() =>
+              navigator.serviceWorker.ready.then((registration) => {
+                if (!navigator.onLine) {
+                  registration.active?.postMessage({
+                    type: 'SET_FRESH_FETCH',
+                    value: false,
+                  });
+                }
+
+              })
+            );
+        });
+      }
+    </script>
+  </body>
+</html>

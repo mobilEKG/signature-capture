@@ -1,0 +1,18 @@
+# Let Git normalize text files
+* text=auto
+
+# Keep npm config files as LF
+.npmrc text eol=lf
+
+# Keep shell scripts as LF
+*.sh text eol=lf
+
+# Keep Windows command files as CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary

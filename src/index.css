@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #0d1711;
+}
+
+@tailwind base;
+@tailwind components;
+
+:root {
+  --color-primary: #317a5c;
+  --color-primary-dark: #245a45;
+  --color-ink: #0d1711;
+  --color-ink-soft: #111f17;
+  --color-border: #2b6b51;
+  --color-accent: #c8ff2f;
+  --color-accent-hover: #3b8a68;
+  --color-accent-strong: #69a57f;
+  --color-muted: #7fa68d;
+  --color-muted-soft: #9aa79d;
+  --color-panel: #101c15;
+  --color-panel-raised: #13231a;
+  --color-chalk: #eef1e8;
+  --color-body: #b5beb4;
+  --space-lg: theme('spacing.6');
+}
+
+@layer components {
+  .card {
+    padding: var(--space-lg);
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    @apply rounded-lg border shadow-sm;
+  }
+  .page-container {
+    @apply w-full max-w-[1280px] px-3 sm:px-4 mx-auto;
+  }
+  .app-main {
+    background-color: var(--color-ink);
+  }
+  .app-header {
+    border-color: var(--color-border);
+    background-color: color-mix(in srgb, var(--color-ink) 96%, transparent);
+    @apply shrink-0 border-b backdrop-blur;
+  }
+  .brand-link {
+    color: var(--color-chalk);
+    @apply flex items-center gap-2 text-xl font-semibold;
+  }
+  .brand-mark {
+    @apply grid h-9 w-9 place-items-center rounded-md shadow-[0_0_20px_rgba(200,255,47,0.16)];
+  }
+  .btn {
+    --tw-ring-color: var(--color-muted);
+    --tw-ring-offset-color: var(--color-ink);
+    @apply inline-flex items-center rounded-md font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-chalk);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+  }
+  .nav-link {
+    color: var(--color-muted-soft);
+    @apply rounded-md px-3 py-2 text-sm font-medium transition;
+  }
+  .nav-link:hover {
+    background-color: var(--color-ink-soft);
+    color: var(--color-chalk);
+  }
+  .nav-link-active {
+    background-color: var(--color-panel-raised);
+    border-color: var(--color-border);
+    color: var(--color-chalk);
+    @apply border shadow-sm;
+  }
+  .nav-link-active:hover {
+    background-color: var(--color-panel-raised);
+    color: var(--color-chalk);
+  }
+  .select-control {
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    color: var(--color-chalk);
+    @apply rounded-md border px-2.5 py-1.5 text-sm shadow-sm focus:outline-none focus:ring-2;
+  }
+  .select-control:focus {
+    border-color: var(--color-muted);
+    --tw-ring-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  }
+  .article-panel {
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    color: var(--color-body);
+    @apply mx-auto max-w-3xl space-y-5 rounded-none border p-5 shadow-[0_24px_80px_rgba(0,0,0,0.26)] sm:p-7;
+  }
+  .article-title {
+    color: var(--color-chalk);
+    @apply flex items-center justify-center gap-2 text-center text-2xl font-semibold;
+  }
+  .article-section-title {
+    color: var(--color-chalk);
+    @apply mt-6 flex items-center gap-2 text-xl font-semibold;
+  }
+  .icon-accent {
+    color: var(--color-muted);
+  }
+  .article-card {
+    border-color: var(--color-border);
+    background-color: var(--color-ink-soft);
+    color: var(--color-body);
+    @apply rounded-none border;
+  }
+  .article-card-title {
+    color: var(--color-chalk);
+    @apply font-semibold;
+  }
+  .drawer-overlay {
+    background-color: color-mix(in srgb, var(--color-ink) 78%, transparent);
+    isolation: isolate;
+    z-index: 2147483640;
+    @apply fixed inset-0 flex justify-end backdrop-blur-sm;
+  }
+  .drawer-panel {
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    @apply relative z-10 h-full w-72 max-w-[82vw] space-y-4 overflow-y-auto border-l p-4 shadow-2xl shadow-black/20;
+  }
+  .drawer-nav {
+    @apply space-y-2;
+  }
+  .drawer-title {
+    color: var(--color-chalk);
+    @apply text-lg font-semibold;
+  }
+  .surface-button {
+    border-color: var(--color-border);
+    color: var(--color-chalk);
+    @apply grid place-items-center rounded-md border;
+  }
+  .drawer-link {
+    @apply block rounded-md px-3 py-2 text-sm font-medium;
+  }
+  .drawer-link-active {
+    background-color: var(--color-primary);
+    color: var(--color-chalk);
+  }
+  .drawer-link-inactive {
+    color: var(--color-muted-soft);
+  }
+  .drawer-link-inactive:hover {
+    background-color: var(--color-ink-soft);
+    color: var(--color-chalk);
+  }
+  .capture-toast {
+    background-color: color-mix(in srgb, var(--color-primary) 95%, transparent);
+    color: var(--color-chalk);
+    @apply max-w-[min(28rem,calc(100vw-2rem))] rounded-md px-4 py-2 text-center text-sm font-medium shadow-lg shadow-black/20;
+  }
+  .capture-toast-anchor {
+    @apply pointer-events-none fixed left-1/2 z-40 -translate-x-1/2;
+    bottom: 48px;
+  }
+  .capture-shell {
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    @apply relative mx-auto flex h-full w-full overflow-hidden rounded-none border shadow-[0_28px_90px_rgba(0,0,0,0.32)];
+  }
+  .capture-stage,
+  .capture-video {
+    background-color: var(--color-ink);
+  }
+  .capture-stage {
+    @apply relative h-full w-full flex-1 overflow-hidden;
+    max-height: none;
+  }
+  .capture-video {
+    @apply mx-auto block h-full w-full object-cover;
+    max-height: inherit;
+  }
+  .capture-scrim {
+    background-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+    @apply absolute backdrop-blur-md;
+  }
+  .capture-guide {
+    border-color: var(--color-accent);
+    @apply absolute rounded-sm border-2 border-dashed animate-border-fade pointer-events-none z-20 shadow-[0_0_0_1px_rgba(200,255,47,0.26)];
+  }
+  .capture-guide-label {
+    background-color: color-mix(in srgb, var(--color-panel) 20%, transparent);
+    color: color-mix(in srgb, var(--color-chalk) 82%, transparent);
+    @apply absolute left-1/2 bottom-2 -translate-x-1/2 rounded px-2 py-0.5 text-xs font-medium shadow-sm whitespace-nowrap backdrop-blur-[1px];
+  }
+  .capture-icon-button {
+    background-color: color-mix(in srgb, var(--color-panel) 18%, transparent);
+    color: color-mix(in srgb, var(--color-chalk) 72%, transparent);
+    @apply absolute top-2 z-10 grid h-9 w-9 place-items-center rounded-md text-lg shadow-sm transition pointer-events-auto backdrop-blur-[1px] disabled:opacity-50;
+  }
+  .capture-icon-button:hover {
+    background-color: color-mix(in srgb, var(--color-panel) 32%, transparent);
+  }
+  .capture-controls {
+    @apply absolute left-1/2 z-30 flex -translate-x-1/2 gap-2;
+  }
+  .preview-frame {
+    border-color: var(--color-border);
+    background-color: color-mix(in srgb, var(--color-panel) 20%, transparent);
+    @apply h-full w-full overflow-hidden rounded-sm border shadow-sm;
+  }
+  .preview-empty {
+    background-color: color-mix(in srgb, var(--color-panel) 32%, transparent);
+    color: var(--color-muted-soft);
+    @apply flex max-w-[calc(100%-2rem)] items-center justify-center gap-2 rounded px-3 py-1 text-sm backdrop-blur-[2px];
+  }
+  .info-footer {
+    border-color: var(--color-border);
+    background-color: color-mix(in srgb, var(--color-ink) 95%, transparent);
+    @apply fixed inset-x-0 bottom-0 z-20 border-t backdrop-blur;
+  }
+  .info-toggle {
+    color: var(--color-muted-soft);
+    @apply absolute right-3 top-1 grid h-7 w-7 place-items-center rounded-md;
+  }
+  .info-toggle:hover {
+    background-color: var(--color-ink-soft);
+  }
+  .info-text {
+    color: var(--color-muted-soft);
+    @apply box-border px-8 text-center text-[11px] leading-4;
+  }
+}
+
+@tailwind utilities;
+
+.checkerboard {
+  background-color: var(--color-panel);
+  background-image: linear-gradient(45deg, var(--color-border) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-border) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--color-border) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--color-border) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+@keyframes border-fade {
+  0%, 100% {
+    border-color: var(--color-accent);
+  }
+  50% {
+    border-color: var(--color-muted);
+  }
+}
+
+.animate-border-fade {
+  animation: border-fade 8s ease-in-out infinite;
+}
+
+@keyframes text-accent-fade {
+  0%, 100% {
+    color: var(--color-accent);
+  }
+  50% {
+    color: var(--color-chalk);
+  }
+}
+
+.animate-text-accent-fade {
+  animation: text-accent-fade 8s ease-in-out infinite;
+}
+
+/* Primary action buttons */
+.btn-metal {
+  border-color: var(--color-accent-hover);
+  background-color: var(--color-primary);
+  color: var(--color-chalk);
+  font-family: 'Space Grotesk', sans-serif;
+  @apply border shadow-sm;
+}
+
+.btn-metal:hover {
+  border-color: var(--color-accent-strong);
+  background-color: var(--color-accent-hover);
+}
+
+.btn-metal:active {
+  border-color: var(--color-primary-dark);
+  background-color: var(--color-primary-dark);
+}
+
+.btn-metal:disabled,
+.btn-metal[disabled] {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* App background */
+.bg-metal {
+  background-color: var(--color-ink);
+  color: var(--color-chalk);
+}
+
+
+/* Hide button text on small portrait screens */
+@media (max-width: 640px) and (orientation: portrait) {
+  .btn-hide-portrait {
+    display: none;
+  }
+
+  .capture-guide-label {
+    @apply bottom-1 max-w-[calc(100%-1rem)] px-1.5 py-0 text-[10px];
+  }
+
+  .capture-icon-button {
+    @apply top-1 h-7 w-7 rounded-sm text-sm;
+  }
+
+  .capture-video {
+    max-height: inherit;
+  }
+
+  .capture-stage {
+    max-height: none;
+  }
+
+  .preview-empty {
+    @apply max-w-[calc(100%-1rem)] px-2 text-center text-[11px] leading-4;
+  }
+
+  .info-text {
+    @apply px-7 text-[10px] leading-[14px];
+  }
+}
+
+@media (max-width: 640px) and (orientation: landscape) {
+  .capture-guide-label {
+    @apply bottom-1 px-1.5 py-0 text-[10px];
+  }
+
+  .capture-icon-button {
+    @apply top-1 h-8 w-8 text-base;
+  }
+}
+
+@media (max-width: 767px) {
+  .drawer-overlay {
+    background-color: color-mix(in srgb, var(--color-ink) 72%, transparent);
+    @apply justify-end backdrop-blur-md;
+  }
+
+  .drawer-panel {
+    border-color: var(--color-border);
+    background-color: var(--color-panel);
+    color: var(--color-chalk);
+    width: min(62vw, 248px);
+    @apply max-w-none space-y-3 border-l px-4 py-4 shadow-2xl shadow-black/30;
+  }
+
+  .drawer-title {
+    color: var(--color-chalk);
+    @apply text-lg leading-6;
+  }
+
+  .drawer-panel .surface-button {
+    border-color: var(--color-border);
+    color: var(--color-chalk);
+    @apply h-9 w-9 bg-transparent text-xl;
+  }
+
+  .drawer-link {
+    @apply rounded-md px-3 py-2 text-sm font-medium no-underline;
+  }
+
+  .drawer-link-active,
+  .drawer-link-active:hover {
+    background-color: var(--color-primary);
+    color: var(--color-chalk);
+  }
+
+  .drawer-link-inactive,
+  .drawer-link-inactive:hover {
+    color: var(--color-muted-soft);
+  }
+
+  .drawer-panel .select-control {
+    border-color: var(--color-border);
+    background-color: var(--color-ink-soft);
+    color: var(--color-chalk);
+    @apply mt-2 h-10 w-full text-sm;
+  }
+
+  .brand-title {
+    @apply text-lg;
+  }
+}
+
+@media (min-width: 1024px) {
+  .capture-page {
+    max-width: 1120px;
+    height: calc(100vh - 118px);
+  }
+
+  .capture-video {
+    max-height: inherit;
+  }
+
+  .capture-stage {
+    max-height: none;
+  }
+
+  .capture-guide-label {
+    @apply text-[11px];
+  }
+}
+
+.brand-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+}

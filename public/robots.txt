@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://signature.codeant.studio/sitemap.xml
