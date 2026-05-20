@@ -13,6 +13,9 @@ const softwareApplicationStructuredData = {
   name: 'Signature Capture',
   applicationCategory: 'DesignApplication',
   operatingSystem: 'Web browser, iOS, Android, Windows, macOS, Linux',
+  url: 'https://signature.codeant.studio/',
+  image: 'https://signature.codeant.studio/social-preview.png',
+  isAccessibleForFree: true,
   offers: {
     '@type': 'Offer',
     price: 0,
@@ -30,8 +33,12 @@ export default function Capture() {
         <meta name="description" content={pageDescription} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={canonicalUrl('/')} />
+        <meta property="og:image" content={canonicalUrl('/social-preview.png')} />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={canonicalUrl('/social-preview.png')} />
         <link rel="canonical" href={canonicalUrl('/')} />
         <script type="application/ld+json">
           {JSON.stringify(softwareApplicationStructuredData)}

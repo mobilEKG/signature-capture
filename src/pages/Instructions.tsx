@@ -4,11 +4,21 @@ import { canonicalUrl } from '../core/metadata.ts'
 
 export default function Instructions() {
   const { t } = useI18n()
+  const title = t('instructions_meta_title')
+  const description = t('instructions_meta_description')
   return (
     <>
       <Helmet>
-        <title>{t('instructions_meta_title')}</title>
-        <meta name="description" content={t('instructions_meta_description')} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl('/instructions')} />
+        <meta property="og:image" content={canonicalUrl('/social-preview.png')} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={canonicalUrl('/social-preview.png')} />
         <link rel="canonical" href={canonicalUrl('/instructions')} />
       </Helmet>
       <div className="page-container">
