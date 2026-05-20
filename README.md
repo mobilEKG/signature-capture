@@ -13,8 +13,15 @@ This repository contains the React/Vite app and the Cloudflare Workers Static As
 - Canonical URL: https://signature.codeant.studio/
 - Runtime: Cloudflare Workers Static Assets serving the Vite build from `dist`
 
+## What is Signature Capture?
+
+Signature Capture is a free open source signature background remover. It uses your phone or desktop camera to capture a handwritten signature on paper, removes the paper background in the browser, and exports a transparent PNG image.
+
+Your signature image is processed locally in your browser. No account is required, and the captured image is not uploaded to a server.
+
 ## Index
 
+- [What is Signature Capture?](#what-is-signature-capture)
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
