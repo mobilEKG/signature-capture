@@ -4,11 +4,21 @@ import { canonicalUrl } from '../core/metadata.ts'
 
 export default function Privacy() {
   const { t } = useI18n()
+  const title = t('privacy_meta_title')
+  const description = t('privacy_meta_description')
   return (
     <>
       <Helmet>
-        <title>{t('privacy_meta_title')}</title>
-        <meta name="description" content={t('privacy_meta_description')} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl('/privacy')} />
+        <meta property="og:image" content={canonicalUrl('/social-preview.png')} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={canonicalUrl('/social-preview.png')} />
         <link rel="canonical" href={canonicalUrl('/privacy')} />
       </Helmet>
       <div className="page-container">
