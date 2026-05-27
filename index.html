@@ -40,7 +40,6 @@
         "description": "Open source browser app that captures a handwritten signature and exports a transparent PNG without uploading the image."
       }
     </script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
   </head>
   <body class="bg-metal">
     <div id="root"></div>
@@ -50,17 +49,7 @@
         window.addEventListener('load', () => {
           navigator.serviceWorker
             .register('/sw.js')
-            .then(() =>
-              navigator.serviceWorker.ready.then((registration) => {
-                if (!navigator.onLine) {
-                  registration.active?.postMessage({
-                    type: 'SET_FRESH_FETCH',
-                    value: false,
-                  });
-                }
-
-              })
-            );
+            .catch((error) => console.error('Service worker registration failed', error));
         });
       }
     </script>
