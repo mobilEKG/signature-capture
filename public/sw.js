@@ -1,55 +1,58 @@
-const CACHE_NAME = 'signature-cache-v1';
-const OFFLINE_URLS = [
+const CACHE_NAME = 'signature-cache-v2';
+const APP_SHELL_URLS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/icons/app-icon.svg',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
 ];
 
-// Toggle this flag to control whether caches are cleared on each load
-let FRESH_FETCH = true;
-
 self.addEventListener('install', (event) => {
-  if (FRESH_FETCH) {
-    event.waitUntil(
-      caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
-    );
-  } else {
-    event.waitUntil(
-      caches.open(CACHE_NAME).then((cache) => cache.addAll(OFFLINE_URLS))
-    );
-  }
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL_URLS))
+  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  if (FRESH_FETCH) {
-    event.waitUntil(
-      caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
-    );
-  } else {
-    event.waitUntil(
-      caches.keys().then((keys) =>
-        Promise.all(keys.map((key) => key !== CACHE_NAME && caches.delete(key)))
-      )
-    );
-  }
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => key !== CACHE_NAME && caches.delete(key)))
+    )
+  );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
-  if (FRESH_FETCH) {
-    event.respondWith(fetch(event.request));
-  } else {
-    event.respondWith(
-      caches.match(event.request).then((response) => response || fetch(event.request))
-    );
+  const { request } = event;
+  if (request.method !== 'GET') {
+    return;
   }
-});
 
-// Allow the main app to toggle the cache strategy at runtime
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SET_FRESH_FETCH') {
-    FRESH_FETCH = Boolean(event.data.value);
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(() => caches.match('/index.html'))
+    );
+    return;
   }
+
+  const requestUrl = new URL(request.url);
+  const isSameOrigin = requestUrl.origin === self.location.origin;
+
+  event.respondWith(
+    fetch(request)
+      .then((response) => {
+        if (isSameOrigin && response.ok) {
+          const responseForCache = response.clone();
+          event.waitUntil(
+            caches.open(CACHE_NAME).then((cache) =>
+              cache.put(request, responseForCache)
+            )
+          );
+        }
+        return response;
+      })
+      .catch(() => caches.match(request))
+  );
 });
