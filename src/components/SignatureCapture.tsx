@@ -1,6 +1,13 @@
 import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { useI18n } from '../core/i18n.tsx'
+import { copyPngDataUrlToClipboard } from '../core/clipboard.ts'
+import { getCaptureGeometry } from '../core/captureGeometry.ts'
 import { processSignatureImage } from '../core/imageProcessing.ts'
+import {
+  clearVideoStream,
+  replaceVideoStream,
+  stopMediaStream,
+} from '../core/mediaStreams.ts'
 
 // Width-to-height ratio for the signature frame
 const SIGNATURE_RECT_RATIO = 3 // 3:1 by default
@@ -13,6 +20,7 @@ function SignatureCapture() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const buttonRowRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLSelectElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
   const { t } = useI18n()
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [rawImage, setRawImage] = useState<string | null>(null)
@@ -25,6 +33,7 @@ function SignatureCapture() {
   })
   const [videoHeight, setVideoHeight] = useState(0)
   const [videoWidth, setVideoWidth] = useState(0)
+  const [videoReady, setVideoReady] = useState(false)
   const [buttonHeight, setButtonHeight] = useState(0)
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([])
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>('')
@@ -127,10 +136,9 @@ function SignatureCapture() {
     const constraints = deviceId
       ? { video: { deviceId } }
       : { video: { facingMode: { ideal: 'environment' } } }
+    setVideoReady(false)
     const s = await navigator.mediaDevices.getUserMedia(constraints)
-    if (videoRef.current) {
-      videoRef.current.srcObject = s
-    }
+    streamRef.current = replaceVideoStream(videoRef.current, streamRef.current, s)
     const track = s.getVideoTracks()[0]
     const facing = track.getSettings().facingMode
     setIsMirrored(facing !== 'environment')
@@ -167,7 +175,8 @@ function SignatureCapture() {
 
   /** Stop all webcam tracks */
   const stopCamera = () => {
-    stream?.getTracks().forEach((t) => t.stop())
+    streamRef.current = clearVideoStream(videoRef.current, streamRef.current)
+    setVideoReady(false)
     setStream(null)
     dropdownRef.current?.blur()
   }
@@ -210,15 +219,17 @@ function SignatureCapture() {
   // Stop the camera when the component unmounts
   useEffect(() => {
     return () => {
-      stream?.getTracks().forEach((t) => t.stop())
+      stopMediaStream(streamRef.current)
+      streamRef.current = null
     }
-  }, [stream])
+  }, [])
 
   // Keep the preview area in sync with the overlay size
   useEffect(() => {
     const updateRect = () => {
       const video = videoRef.current
       if (!video) return
+      setVideoReady(video.videoWidth > 0 && video.videoHeight > 0)
       const visibleStageWidth =
         video.closest<HTMLElement>('.capture-shell')?.clientWidth ||
         video.parentElement?.clientWidth ||
@@ -285,45 +296,33 @@ function SignatureCapture() {
     const canvas = canvasRef.current
     if (!video || !canvas) return
 
-    // Match the crop rectangle drawn over the aspect-ratio preserving live preview.
-    const scale = Math.max(
-      video.clientWidth / video.videoWidth,
-      video.clientHeight / video.videoHeight,
-    )
-    const renderedWidth = video.videoWidth * scale
-    const renderedHeight = video.videoHeight * scale
-    const offsetX = (video.clientWidth - renderedWidth) / 2
-    const offsetY = (video.clientHeight - renderedHeight) / 2
+    const geometry = getCaptureGeometry({
+      clientWidth: video.clientWidth,
+      clientHeight: video.clientHeight,
+      videoWidth: video.videoWidth,
+      videoHeight: video.videoHeight,
+      previewRect,
+      isMirrored,
+    })
 
-    const rectWidth = previewRect.width / scale
-    const rectHeight = previewRect.height / scale
-    const rectX = (previewRect.x - offsetX) / scale
-    const rectY = (previewRect.y - offsetY) / scale
-    // Mirror X coordinate if camera preview is mirrored
-    const sourceX = isMirrored
-      ? video.videoWidth - rectX - rectWidth
-      : rectX
+    if (!geometry) {
+      showToast(t('camera_not_ready'))
+      return
+    }
 
-    // Keep the exported image aspect identical to the on-screen guide.
-    const outputScale = Math.max(
-      video.videoWidth / renderedWidth,
-      video.videoHeight / renderedHeight,
-    )
-    const outputWidth = Math.round(previewRect.width * outputScale)
-    const outputHeight = Math.round(previewRect.height * outputScale)
-    canvas.width = outputWidth
-    canvas.height = outputHeight
+    canvas.width = geometry.outputWidth
+    canvas.height = geometry.outputHeight
     const ctx = canvas.getContext('2d', { willReadFrequently: true })!
     ctx.drawImage(
       video,
-      sourceX,
-      rectY,
-      rectWidth,
-      rectHeight,
+      geometry.sourceX,
+      geometry.sourceY,
+      geometry.sourceWidth,
+      geometry.sourceHeight,
       0,
       0,
-      outputWidth,
-      outputHeight,
+      geometry.outputWidth,
+      geometry.outputHeight,
     )
     // Save the captured frame so the user can process or download it
     const dataURL = canvas.toDataURL('image/png')
@@ -349,19 +348,11 @@ function SignatureCapture() {
 
   // Image processing function imported from core module
   const copyToClipboard = async (dataUrl: string, notify = true) => {
-    try {
-      if (navigator.clipboard && 'ClipboardItem' in window) {
-        const res = await fetch(dataUrl)
-        const blob = await res.blob()
-        const item = new ClipboardItem({ [blob.type]: blob })
-        await navigator.clipboard.write([item])
-        if (notify) {
-          showToast(t('signature_copied'))
-        }
-      }
-    } catch (err) {
-      console.error('Clipboard copy failed', err)
+    const copied = await copyPngDataUrlToClipboard(dataUrl)
+    if (notify) {
+      showToast(copied ? t('signature_copied') : t('signature_clipboard_unavailable'))
     }
+    return copied
   }
 
   const timestampFilename = () => {
@@ -424,9 +415,12 @@ function SignatureCapture() {
   const saveSignature = async () => {
     if (!rawImage) return
     const processedDataURL = image ?? (await processRawSignature())
-    await copyToClipboard(processedDataURL, false)
+    const copied = await copyToClipboard(processedDataURL, false)
     downloadImage(processedDataURL)
-    showToast(t('signature_saved_and_copied'), 2400)
+    showToast(
+      copied ? t('signature_saved_and_copied') : t('signature_saved'),
+      2400,
+    )
   }
 
   // Common button styling utility classes
@@ -444,6 +438,7 @@ function SignatureCapture() {
   const rightOverlayWidth = Math.max(0, videoWidth - (previewRect.x + previewRect.width))
   const bottomOverlayHeight = Math.max(0, videoHeight - (previewRect.y + previewRect.height))
   const previewImage = image ?? rawImage
+  const canCapture = Boolean(stream && videoReady)
   
   return (
     <div className="page-container capture-page relative flex h-full flex-col items-center">
@@ -569,6 +564,7 @@ function SignatureCapture() {
               >
                 <button
                   onClick={capture}
+                  disabled={!canCapture}
                   className={buttonBase}
                   title={t('capture_btn')}
                 >
