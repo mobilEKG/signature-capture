@@ -27,6 +27,7 @@ Your signature image is processed locally in your browser. No account is require
 - [Tech Stack](#tech-stack)
 - [Image Processing Algorithm](#image-processing-algorithm)
 - [Development](#development)
+- [Local Test Environment](#local-test-environment)
 - [Build](#build)
 - [Deploy](#deploy)
 - [Privacy Model](#privacy-model)
@@ -116,6 +117,41 @@ References:
 ```bash
 npm install
 npm run dev
+```
+
+## Local Test Environment
+
+Use dedicated local ports for this project so it does not collide with other apps running on your machine.
+
+Run the automated test suite:
+
+```bash
+npm test
+```
+
+Run the Vite development server:
+
+```bash
+npm run dev -- --host 127.0.0.1 --port 5174 --strictPort
+```
+
+Open:
+
+```text
+http://127.0.0.1:5174/
+```
+
+Test the production build locally:
+
+```bash
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4174 --strictPort
+```
+
+Open:
+
+```text
+http://127.0.0.1:4174/
 ```
 
 ## Build
