@@ -1,6 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 import { useI18n } from '../core/i18n.tsx'
-import { canonicalUrl } from '../core/metadata.ts'
+import {
+  REPOSITORY_LABEL,
+  REPOSITORY_URL,
+  canonicalUrl,
+} from '../core/metadata.ts'
 
 export default function About() {
   const { t } = useI18n()
@@ -31,6 +35,17 @@ export default function About() {
         {t('about_p1')}
       </p>
       <p>{t('about_p2')}</p>
+      <p>
+        {t('source_repository')}:{' '}
+        <a
+          className="text-link"
+          href={REPOSITORY_URL}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {REPOSITORY_LABEL}
+        </a>
+      </p>
       </article>
       </div>
     </>

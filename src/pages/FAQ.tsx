@@ -1,6 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 import { useI18n } from '../core/i18n.tsx'
-import { canonicalUrl } from '../core/metadata.ts'
+import {
+  REPOSITORY_LABEL,
+  REPOSITORY_URL,
+  canonicalUrl,
+} from '../core/metadata.ts'
 
 export default function FAQ() {
   const { t } = useI18n()
@@ -54,7 +58,17 @@ export default function FAQ() {
             <i className="ri-code-s-slash-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
             {t('faq_q_open_source')}
           </dt>
-          <dd className="mt-1">{t('faq_a_open_source')}</dd>
+          <dd className="mt-1">
+            {t('faq_a_open_source')}{' '}
+            <a
+              className="text-link"
+              href={REPOSITORY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {REPOSITORY_LABEL}
+            </a>
+          </dd>
         </div>
         <div className="article-card p-4">
           <dt className="article-card-title">

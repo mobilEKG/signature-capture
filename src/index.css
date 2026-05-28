@@ -118,6 +118,13 @@ body {
     color: var(--color-chalk);
     @apply font-semibold;
   }
+  .text-link {
+    color: var(--color-accent);
+    @apply font-medium underline underline-offset-4 transition;
+  }
+  .text-link:hover {
+    color: var(--color-chalk);
+  }
   .drawer-overlay {
     background-color: color-mix(in srgb, var(--color-ink) 78%, transparent);
     isolation: isolate;

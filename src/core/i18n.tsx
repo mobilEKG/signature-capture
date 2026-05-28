@@ -43,6 +43,7 @@ const translations: Record<Language, Record<string, string>> = {
     signature_saved: 'File saved.',
     signature_saved_and_copied: 'File saved and copied to clipboard.',
     language: 'Language',
+    source_repository: 'Source repository',
     home_footer_1:
       'Open-source signature capture. Images are processed locally and never leave your device.',
     home_footer_read: 'Read our',
@@ -137,6 +138,7 @@ const translations: Record<Language, Record<string, string>> = {
     signature_saved: 'Archivo guardado.',
     signature_saved_and_copied: 'Archivo guardado y copiado al portapapeles.',
     language: 'Idioma',
+    source_repository: 'Repositorio de código',
     home_footer_1:
       'En Signature Capture, tu privacidad es importante. Todo el procesamiento se realiza localmente y las imágenes capturadas nunca salen de tu dispositivo.',
     home_footer_read: 'Lee nuestra',
@@ -234,6 +236,7 @@ const translations: Record<Language, Record<string, string>> = {
     signature_saved_and_copied:
       'Fichier enregistré et copié dans le presse-papiers.',
     language: 'Langue',
+    source_repository: 'Dépôt source',
     home_footer_1:
       'Chez Signature Capture, votre confidentialité compte. Tout le traitement se fait localement et les images capturées ne quittent jamais votre appareil.',
     home_footer_read: 'Lisez notre',
@@ -329,6 +332,7 @@ const translations: Record<Language, Record<string, string>> = {
     signature_saved: '文件已保存。',
     signature_saved_and_copied: '文件已保存并复制到剪贴板。',
     language: '语言',
+    source_repository: '\u6e90\u4ee3\u7801\u4ed3\u5e93',
     home_footer_1:
       '在 Signature Capture，您的隐私至关重要。所有处理都在本地完成，捕获的图像绝不会离开您的设备。',
     home_footer_read: '阅读我们的',
