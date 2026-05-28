@@ -48,6 +48,13 @@ export default function FAQ() {
         </div>
         <div className="article-card p-4">
           <dt className="article-card-title">
+            <i className="ri-install-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
+            {t('faq_q_install')}
+          </dt>
+          <dd className="mt-1">{t('faq_a_install')}</dd>
+        </div>
+        <div className="article-card p-4">
+          <dt className="article-card-title">
             <i className="ri-shield-check-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
             {t('faq_q4')}
           </dt>

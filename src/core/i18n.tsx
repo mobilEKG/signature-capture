@@ -71,6 +71,15 @@ const translations: Record<Language, Record<string, string>> = {
       'On mobile, landscape orientation often works better than portrait',
     instructions_tip_open_source:
       'The project is open source, so you can inspect, fork, and self-host it',
+    instructions_pwa_heading: 'Install on Your Phone',
+    instructions_pwa_intro:
+      'Signature Capture can be added to your home screen as a PWA. It uses standard web app install support, so no app store download is required.',
+    instructions_pwa_android_heading: 'Android 10+',
+    instructions_pwa_android:
+      'Use current Chrome, Edge, or Samsung Internet on Android 10 or later. Open the site, tap the browser menu, then choose Install app or Add to Home screen.',
+    instructions_pwa_ios_heading: 'iOS/iPadOS 16.4+',
+    instructions_pwa_ios:
+      'Use Safari on iPhone or iPad. Tap Share, choose Add to Home Screen, keep Open as Web App on if shown, then tap Add. On iOS 16.3 or earlier, Safari is required for home screen install.',
     about_meta_title: 'About - Signature Capture',
     about_meta_description:
       'Learn about the open-source Signature Capture project.',
@@ -88,6 +97,9 @@ const translations: Record<Language, Record<string, string>> = {
       'Your signature downloads as a high-quality PNG with a transparent background.',
     faq_q3: 'Do I need special software?',
     faq_a3: 'No, everything runs directly in your browser.',
+    faq_q_install: 'Can I install it on Android or iOS?',
+    faq_a_install:
+      'Yes. The site includes the PWA install pieces: HTTPS hosting, a web app manifest, app icons, start URL, fullscreen display mode, and a service worker. Use Android 10+ with a current install-capable browser, or iOS/iPadOS 16.4+ with Safari; camera capture still requires browser camera permission.',
     faq_q4: 'Is my signature secure?',
     faq_a4:
       'The image never leaves your device unless you choose to download it. We do not store or transmit your data.',
@@ -168,6 +180,15 @@ const translations: Record<Language, Record<string, string>> = {
       'En el móvil, la orientación horizontal suele funcionar mejor que la vertical',
     instructions_tip_open_source:
       'El proyecto es de código abierto: puedes revisar, bifurcar y autoalojar el código',
+    instructions_pwa_heading: 'Instalar en tu teléfono',
+    instructions_pwa_intro:
+      'Signature Capture se puede agregar a la pantalla de inicio como una PWA. Usa instalación estándar de aplicaciones web, así que no requiere descarga desde una tienda de apps.',
+    instructions_pwa_android_heading: 'Android 10+',
+    instructions_pwa_android:
+      'Usa Chrome, Edge o Samsung Internet actualizado en Android 10 o posterior. Abre el sitio, toca el menú del navegador y elige Instalar app o Agregar a pantalla de inicio.',
+    instructions_pwa_ios_heading: 'iOS/iPadOS 16.4+',
+    instructions_pwa_ios:
+      'Usa Safari en iPhone o iPad. Toca Compartir, elige Agregar a pantalla de inicio, deja activado Abrir como app web si aparece y toca Agregar. En iOS 16.3 o anterior, Safari es necesario para instalar en la pantalla de inicio.',
     about_meta_title: 'Acerca de - Signature Capture',
     about_meta_description:
       'Conoce el proyecto Signature Capture y cómo funciona.',
@@ -185,6 +206,9 @@ const translations: Record<Language, Record<string, string>> = {
       'Tu firma se descarga como un PNG de alta calidad con fondo transparente.',
     faq_q3: '\u00bfNecesito software especial?',
     faq_a3: 'No, todo funciona directamente en tu navegador.',
+    faq_q_install: '\u00bfPuedo instalarlo en Android o iOS?',
+    faq_a_install:
+      'Sí. El sitio incluye las piezas de instalación PWA: alojamiento HTTPS, manifiesto web, iconos de app, URL de inicio, modo de pantalla completa y service worker. Usa Android 10+ con un navegador actualizado compatible con instalación, o iOS/iPadOS 16.4+ con Safari; la captura con cámara todavía requiere permiso del navegador.',
     faq_q4: '\u00bfMi firma est\u00e1 segura?',
     faq_a4:
       'La imagen nunca sale de tu dispositivo salvo que decidas descargarla. No almacenamos ni transmitimos tus datos.',
@@ -266,6 +290,15 @@ const translations: Record<Language, Record<string, string>> = {
       'Sur mobile, l\'orientation paysage fonctionne souvent mieux que le portrait',
     instructions_tip_open_source:
       'Le projet est open source : vous pouvez inspecter, forker et auto-héberger le code',
+    instructions_pwa_heading: 'Installer sur votre téléphone',
+    instructions_pwa_intro:
+      'Signature Capture peut être ajouté à votre écran d’accueil comme PWA. Il utilise l’installation standard des applications web, sans téléchargement depuis une boutique d’apps.',
+    instructions_pwa_android_heading: 'Android 10+',
+    instructions_pwa_android:
+      'Utilisez Chrome, Edge ou Samsung Internet à jour sur Android 10 ou version ultérieure. Ouvrez le site, touchez le menu du navigateur, puis choisissez Installer l’application ou Ajouter à l’écran d’accueil.',
+    instructions_pwa_ios_heading: 'iOS/iPadOS 16.4+',
+    instructions_pwa_ios:
+      'Utilisez Safari sur iPhone ou iPad. Touchez Partager, choisissez Ajouter à l’écran d’accueil, gardez Ouvrir comme app web activé si l’option apparaît, puis touchez Ajouter. Sur iOS 16.3 ou version antérieure, Safari est requis pour l’installation sur l’écran d’accueil.',
     about_meta_title: 'À propos - Signature Capture',
     about_meta_description:
       'En savoir plus sur le projet Signature Capture et son fonctionnement.',
@@ -283,6 +316,9 @@ const translations: Record<Language, Record<string, string>> = {
       'Votre signature est téléchargée au format PNG de haute qualité avec fond transparent.',
     faq_q3: 'Ai-je besoin d\'un logiciel particulier?',
     faq_a3: 'Non, tout fonctionne directement dans votre navigateur.',
+    faq_q_install: 'Puis-je l\'installer sur Android ou iOS?',
+    faq_a_install:
+      'Oui. Le site inclut les éléments d’installation PWA : hébergement HTTPS, manifeste web, icônes d’app, URL de démarrage, mode plein écran et service worker. Utilisez Android 10+ avec un navigateur récent compatible avec l’installation, ou iOS/iPadOS 16.4+ avec Safari; la capture avec caméra nécessite toujours l’autorisation du navigateur.',
     faq_q4: 'Ma signature est-elle sécurisée?',
     faq_a4:
       'L\'image ne quitte jamais votre appareil, sauf si vous décidez de la télécharger. Nous ne stockons ni ne transmettons vos données.',
@@ -356,6 +392,15 @@ const translations: Record<Language, Record<string, string>> = {
     instructions_tip_back_cam: '在移动设备上，使用后置摄像头可获得更高质量',
     instructions_tip_landscape: '在移动端，横屏通常比竖屏效果更好',
     instructions_tip_open_source: '项目是开源的，你可以查看、fork 并自行部署',
+    instructions_pwa_heading: '安装到手机',
+    instructions_pwa_intro:
+      'Signature Capture 可以作为 PWA 添加到主屏幕。它使用标准网页应用安装支持，不需要从应用商店下载。',
+    instructions_pwa_android_heading: 'Android 10+',
+    instructions_pwa_android:
+      '在 Android 10 或更高版本上使用最新的 Chrome、Edge 或 Samsung Internet。打开网站，点击浏览器菜单，然后选择安装应用或添加到主屏幕。',
+    instructions_pwa_ios_heading: 'iOS/iPadOS 16.4+',
+    instructions_pwa_ios:
+      '在 iPhone 或 iPad 上使用 Safari。点击分享，选择添加到主屏幕；如果出现作为网页应用打开选项，请保持开启，然后点击添加。iOS 16.3 或更早版本需要使用 Safari 才能安装到主屏幕。',
     about_meta_title: '关于 - Signature Capture',
     about_meta_description: '了解 Signature Capture 项目及其工作原理。',
     about_heading: '关于 Signature Capture',
@@ -370,6 +415,9 @@ const translations: Record<Language, Record<string, string>> = {
     faq_a2: '你的签名会以高质量的透明背景 PNG 下载。',
     faq_q3: '需要安装特殊软件吗？',
     faq_a3: '不需要，一切都在浏览器中完成。',
+    faq_q_install: '可以安装到 Android 或 iOS 吗？',
+    faq_a_install:
+      '可以。网站已经包含 PWA 安装所需的技术配置：HTTPS 托管、网页应用清单、应用图标、启动 URL、全屏显示模式和 service worker。请使用 Android 10+ 和支持安装的最新版浏览器，或在 iOS/iPadOS 16.4+ 上使用 Safari；相机拍摄仍需要浏览器相机权限。',
     faq_q4: '我的签名安全吗？',
     faq_a4: '图像不会离开你的设备，除非你选择下载。我们不会存储或传输你的数据。',
     faq_q_open_source: '这个项目是开源的吗？',
