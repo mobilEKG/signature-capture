@@ -1,6 +1,6 @@
 import SignatureCapture from '../components/SignatureCapture.tsx'
 import { Helmet } from 'react-helmet-async'
-import { canonicalUrl } from '../core/metadata.ts'
+import { REPOSITORY_URL, canonicalUrl } from '../core/metadata.ts'
 
 const pageTitle =
   'Free Signature Background Remover | Transparent PNG Signature'
@@ -23,6 +23,7 @@ const softwareApplicationStructuredData = {
   },
   description:
     'Open source browser app that captures a handwritten signature and exports a transparent PNG without uploading the image.',
+  sameAs: [REPOSITORY_URL],
 }
 
 export default function Capture() {
