@@ -76,6 +76,30 @@ export default function Instructions() {
         {t('instructions_tip_open_source')}
       </p>
       </div>
+      <h2 className="article-section-title">
+        <i
+          className="ri-install-line ri-lg icon-accent"
+          aria-hidden="true"
+        ></i>
+        {t('instructions_pwa_heading')}
+      </h2>
+      <p>{t('instructions_pwa_intro')}</p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="article-card p-4">
+          <h3 className="article-card-title">
+            <i className="ri-android-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
+            {t('instructions_pwa_android_heading')}
+          </h3>
+          <p className="mt-1">{t('instructions_pwa_android')}</p>
+        </div>
+        <div className="article-card p-4">
+          <h3 className="article-card-title">
+            <i className="ri-apple-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
+            {t('instructions_pwa_ios_heading')}
+          </h3>
+          <p className="mt-1">{t('instructions_pwa_ios')}</p>
+        </div>
+      </div>
       </article>
     </div>
     </>
