@@ -1,6 +1,6 @@
 import SignatureCapture from '../components/SignatureCapture.tsx'
-import { Helmet } from 'react-helmet-async'
 import { REPOSITORY_URL, canonicalUrl } from '../core/metadata.ts'
+import PageMeta from '../core/PageMeta.tsx'
 
 const pageTitle =
   'Free Signature Background Remover | Transparent PNG Signature'
@@ -29,22 +29,13 @@ const softwareApplicationStructuredData = {
 export default function Capture() {
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content={canonicalUrl('/')} />
-        <meta property="og:image" content={canonicalUrl('/social-preview.png')} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content={canonicalUrl('/social-preview.png')} />
-        <link rel="canonical" href={canonicalUrl('/')} />
-        <script type="application/ld+json">
-          {JSON.stringify(softwareApplicationStructuredData)}
-        </script>
-      </Helmet>
+      <PageMeta
+        title={pageTitle}
+        description={pageDescription}
+        canonicalPath="/"
+        imageUrl={canonicalUrl('/social-preview.png')}
+        structuredData={softwareApplicationStructuredData}
+      />
       <div className="flex flex-col h-full">
         <section id="tool" className="flex-grow">
           <SignatureCapture />

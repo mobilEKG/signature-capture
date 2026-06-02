@@ -1,16 +1,14 @@
 import { Link, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import Header from './Header.tsx'
-import { Helmet } from 'react-helmet-async'
 import { useI18n } from '../core/i18n.tsx'
 
 export default function Layout() {
-  const { lang, t } = useI18n()
+  const { t } = useI18n()
   const [infoOpen, setInfoOpen] = useState(true)
 
   return (
     <div className="flex h-screen flex-col bg-metal overflow-hidden">
-      <Helmet htmlAttributes={{ lang }} />
       <Header />
       <main className="app-main flex-grow overflow-y-auto pb-10 pt-2 sm:pb-12 sm:pt-3 lg:pb-10">
         <Outlet />

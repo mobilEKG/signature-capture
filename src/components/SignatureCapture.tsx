@@ -4,6 +4,10 @@ import { copyPngDataUrlToClipboard } from '../core/clipboard.ts'
 import { getCaptureGeometry } from '../core/captureGeometry.ts'
 import { processSignatureImage } from '../core/imageProcessing.ts'
 import {
+  getPreviewImageDataUrl,
+  getSavedImageDataUrl,
+} from '../core/signatureState.ts'
+import {
   clearVideoStream,
   replaceVideoStream,
   stopMediaStream,
@@ -24,7 +28,7 @@ function SignatureCapture() {
   const { t } = useI18n()
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [rawImage, setRawImage] = useState<string | null>(null)
-  const [image, setImage] = useState<string | null>(null)
+  const [processedImage, setProcessedImage] = useState<string | null>(null)
   const [previewRect, setPreviewRect] = useState({
     width: 256,
     height: 128,
@@ -40,9 +44,11 @@ function SignatureCapture() {
   const [isMirrored, setIsMirrored] = useState(true)
   const [selectOpen, setSelectOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [cameraErrorKey, setCameraErrorKey] = useState<string | null>(null)
   const toastTimeout = useRef<number | null>(null)
   const autoToastShown = useRef(false)
   const overlayGap = videoWidth < 640 ? 4 : 6
+  const cameraErrorMessage = cameraErrorKey ? t(cameraErrorKey) : null
 
   const showToast = (message: string, timeout: number = 1500) => {
     setToastMessage(message)
@@ -147,6 +153,7 @@ function SignatureCapture() {
 
   const startCamera = async (deviceId?: string) => {
     try {
+      setCameraErrorKey(null)
       const idToUse = deviceId ?? selectedDeviceId
       await startStream(idToUse || undefined)
 
@@ -170,6 +177,7 @@ function SignatureCapture() {
       }
     } catch (err) {
       console.error(err)
+      setCameraErrorKey('camera_permission_denied')
     }
   }
 
@@ -327,24 +335,8 @@ function SignatureCapture() {
     // Save the captured frame so the user can process or download it
     const dataURL = canvas.toDataURL('image/png')
     setRawImage(dataURL)
-    setImage(null)
+    setProcessedImage(null)
   }
-
-  // Update preview when raw image changes
-  useEffect(() => {
-    if (!rawImage) return
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d', { willReadFrequently: true })!
-    const img = new Image()
-    img.onload = () => {
-      canvas.width = img.width
-      canvas.height = img.height
-      ctx.drawImage(img, 0, 0)
-      setImage(canvas.toDataURL('image/png'))
-    }
-    img.src = rawImage
-  }, [rawImage])
 
   // Image processing function imported from core module
   const copyToClipboard = async (dataUrl: string, notify = true) => {
@@ -408,13 +400,18 @@ function SignatureCapture() {
   const abstractSignature = async () => {
     if (!rawImage) return
     const processedDataURL = await processRawSignature()
-    setImage(processedDataURL)
+    setProcessedImage(processedDataURL)
     await copyToClipboard(processedDataURL)
   }
 
   const saveSignature = async () => {
     if (!rawImage) return
-    const processedDataURL = image ?? (await processRawSignature())
+    const processedDataURL =
+      getSavedImageDataUrl({
+        rawImageDataUrl: rawImage,
+        processedImageDataUrl: processedImage,
+      }) ?? (await processRawSignature())
+    setProcessedImage(processedDataURL)
     const copied = await copyToClipboard(processedDataURL, false)
     downloadImage(processedDataURL)
     showToast(
@@ -437,7 +434,10 @@ function SignatureCapture() {
 
   const rightOverlayWidth = Math.max(0, videoWidth - (previewRect.x + previewRect.width))
   const bottomOverlayHeight = Math.max(0, videoHeight - (previewRect.y + previewRect.height))
-  const previewImage = image ?? rawImage
+  const previewImage = getPreviewImageDataUrl({
+    rawImageDataUrl: rawImage,
+    processedImageDataUrl: processedImage,
+  })
   const canCapture = Boolean(stream && videoReady)
   
   return (
@@ -566,30 +566,46 @@ function SignatureCapture() {
                   onClick={capture}
                   disabled={!canCapture}
                   className={buttonBase}
+                  aria-label={t('capture_btn')}
                   title={t('capture_btn')}
                 >
-                  <i className="ri-camera-lens-line ri-lg"></i>
+                  <i className="ri-camera-lens-line ri-lg" aria-hidden="true"></i>
                   <span className="btn-hide-portrait">{t('capture_btn')}</span>
                 </button>
                 <button
                   onClick={abstractSignature}
                   disabled={!rawImage}
                   className={`${buttonBase} ${!rawImage ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  aria-label={t('clean')}
                   title={t('clean')}
                 >
-                  <i className="ri-eraser-line ri-lg"></i>
+                  <i className="ri-eraser-line ri-lg" aria-hidden="true"></i>
                   <span className="btn-hide-portrait">{t('clean')}</span>
                 </button>
                 <button
                   onClick={saveSignature}
                   disabled={!rawImage}
                   className={`${buttonBase} ${!rawImage ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  aria-label={t('save')}
                   title={t('save')}
                 >
-                  <i className="ri-download-2-line ri-lg"></i>
+                  <i className="ri-download-2-line ri-lg" aria-hidden="true"></i>
                   <span className="btn-hide-portrait">{t('save')}</span>
                 </button>
               </div>
+
+              {cameraErrorMessage && !stream && (
+                <div className="camera-error-panel">
+                  <p>{cameraErrorMessage}</p>
+                  <button
+                    type="button"
+                    className="camera-error-action"
+                    onClick={() => startCamera()}
+                  >
+                    {t('camera_retry')}
+                  </button>
+                </div>
+              )}
 
               {/* Preview Overlay */}
               {previewImage ? (
@@ -608,7 +624,7 @@ function SignatureCapture() {
                   <div className="preview-frame">
                     <img
                       src={previewImage}
-                      alt={image ? 'Signature preview' : 'Captured preview'}
+                      alt={processedImage ? 'Signature preview' : 'Captured preview'}
                       className={`w-full h-full object-contain ${
                         isMirrored ? 'transform scale-x-[-1]' : ''
                       }`}
