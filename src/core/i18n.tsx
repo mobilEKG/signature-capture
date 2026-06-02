@@ -105,7 +105,7 @@ const translations: Record<Language, Record<string, string>> = {
       'Yes. The site includes the PWA install pieces: HTTPS hosting, a web app manifest, app icons, start URL, fullscreen display mode, and a service worker. Use Android 10+ with a current install-capable browser, or iOS/iPadOS 16.4+ with Safari; camera capture still requires browser camera permission.',
     faq_q4: 'Is my signature secure?',
     faq_a4:
-      'The image never leaves your device unless you choose to download it. We do not store or transmit your data.',
+      'The signature image never leaves your device unless you choose to download it. We do not store or transmit your signature data.',
     faq_q_open_source: 'Is the project open source?',
     faq_a_open_source:
       'Yes. You can inspect the code, run it locally, and deploy your own copy.',
@@ -117,12 +117,14 @@ const translations: Record<Language, Record<string, string>> = {
       'Privacy practices for the Signature Capture web application.',
     privacy_heading: 'Privacy',
     privacy_intro:
-      'Signature Capture is open source and designed to keep signature images on your device.',
+      'Signature Capture is open source and designed to keep signature images on your device. The hosted site also uses privacy-first Cloudflare Web Analytics to understand aggregate traffic and performance.',
     privacy_privacy_heading: 'Privacy and Data Handling',
     privacy_local_processing:
       'Local Processing: All image processing occurs locally in your web browser (client-side). Captured signatures never leave your device or get uploaded to any server. This means your signature images remain private and under your control at all times.',
     privacy_no_data:
-      'No Personal Data Collection: The app does not ask for an account and does not store, transmit, or share your signature.',
+      'Signature Data: The app does not ask for an account and does not store, transmit, or share your signature image.',
+    privacy_analytics:
+      'Analytics: The hosted site loads Cloudflare Web Analytics to collect aggregate page-view and performance metrics. Cloudflare states that this analytics beacon does not use cookies or local storage, and the app does not use it to identify users or collect signature images.',
     privacy_terms_heading: 'Terms of Use & Disclaimer',
     privacy_no_warranties:
       'No Warranties Provided: This web application is provided as is. Review the code and use it at your own discretion.',
@@ -217,7 +219,7 @@ const translations: Record<Language, Record<string, string>> = {
       'Sí. El sitio incluye las piezas de instalación PWA: alojamiento HTTPS, manifiesto web, iconos de app, URL de inicio, modo de pantalla completa y service worker. Usa Android 10+ con un navegador actualizado compatible con instalación, o iOS/iPadOS 16.4+ con Safari; la captura con cámara todavía requiere permiso del navegador.',
     faq_q4: '\u00bfMi firma est\u00e1 segura?',
     faq_a4:
-      'La imagen nunca sale de tu dispositivo salvo que decidas descargarla. No almacenamos ni transmitimos tus datos.',
+      'La imagen de la firma nunca sale de tu dispositivo salvo que decidas descargarla. No almacenamos ni transmitimos los datos de tu firma.',
     faq_q_open_source: '¿El proyecto es de código abierto?',
     faq_a_open_source:
       'Sí. Puedes revisar el código, ejecutarlo localmente y desplegar tu propia copia.',
@@ -229,12 +231,14 @@ const translations: Record<Language, Record<string, string>> = {
       'Pr\u00e1cticas de privacidad de la aplicaci\u00f3n web Signature Capture.',
     privacy_heading: 'Pol\u00edtica de Privacidad',
     privacy_intro:
-      'Signature Capture est\u00e1 dise\u00f1ado teniendo en cuenta tu privacidad. Te animamos a usar esta herramienta con confianza, sabiendo que no recopila datos personales y mantiene tu informaci\u00f3n en tu propio dispositivo. A continuaci\u00f3n explicamos nuestras pr\u00e1cticas de datos y los t\u00e9rminos de uso de esta aplicaci\u00f3n web de forma clara y formal.',
+      'Signature Capture es de c\u00f3digo abierto y est\u00e1 dise\u00f1ado para mantener las im\u00e1genes de firma en tu dispositivo. El sitio alojado tambi\u00e9n usa Cloudflare Web Analytics, con enfoque de privacidad, para entender el tr\u00e1fico agregado y el rendimiento.',
     privacy_privacy_heading: 'Privacidad y manejo de datos',
     privacy_local_processing:
       'Procesamiento local: Todo el procesamiento de im\u00e1genes se realiza localmente en tu navegador (del lado del cliente). Las firmas capturadas nunca salen de tu dispositivo ni se suben a ning\u00fan servidor. Esto significa tus im\u00e1genes de firma se mantienen privadas y bajo tu control en todo momento.',
     privacy_no_data:
-      'No se recopilan datos personales: No recopilamos ninguna informaci\u00f3n personal o datos identificables. La herramienta no almacena, transmite ni comparte tu nombre, firma ni ning\u00fan otro dato personal. Puedes usar Signature Capture sin preocuparte por una recopilaci\u00f3n de datos oculta.',
+      'Datos de firma: La aplicaci\u00f3n no pide una cuenta y no almacena, transmite ni comparte la imagen de tu firma.',
+    privacy_analytics:
+      'Anal\u00edtica: El sitio alojado carga Cloudflare Web Analytics para recopilar m\u00e9tricas agregadas de p\u00e1ginas vistas y rendimiento. Cloudflare indica que este beacon de anal\u00edtica no usa cookies ni almacenamiento local, y la aplicaci\u00f3n no lo usa para identificar usuarios ni recopilar im\u00e1genes de firmas.',
     privacy_terms_heading: 'T\u00e9rminos de uso y exenci\u00f3n de responsabilidad',
     privacy_no_warranties:
       'No se ofrecen garant\u00edas: Esta aplicaci\u00f3n web se proporciona "tal cual", sin garant\u00edas ni compromisos. No prometemos que Signature Capture cumpla con tus requerimientos, funcione ininterrumpidamente o est\u00e9 libre de errores. Todas las funciones se ofrecen sin ninguna garant\u00eda expresa o impl\u00edcita (incluidas garant\u00edas de rendimiento, seguridad o idoneidad para un prop\u00f3sito particular).',
@@ -330,7 +334,7 @@ const translations: Record<Language, Record<string, string>> = {
       'Oui. Le site inclut les éléments d’installation PWA : hébergement HTTPS, manifeste web, icônes d’app, URL de démarrage, mode plein écran et service worker. Utilisez Android 10+ avec un navigateur récent compatible avec l’installation, ou iOS/iPadOS 16.4+ avec Safari; la capture avec caméra nécessite toujours l’autorisation du navigateur.',
     faq_q4: 'Ma signature est-elle sécurisée?',
     faq_a4:
-      'L\'image ne quitte jamais votre appareil, sauf si vous décidez de la télécharger. Nous ne stockons ni ne transmettons vos données.',
+      'L\'image de signature ne quitte jamais votre appareil, sauf si vous décidez de la télécharger. Nous ne stockons ni ne transmettons les données de votre signature.',
     faq_q_open_source: 'Le projet est-il open source?',
     faq_a_open_source:
       'Oui. Vous pouvez inspecter le code, l\'exécuter localement et déployer votre propre copie.',
@@ -342,12 +346,14 @@ const translations: Record<Language, Record<string, string>> = {
       "Pratiques de confidentialité de l'application web Signature Capture.",
     privacy_heading: 'Politique de confidentialité',
     privacy_intro:
-      "Signature Capture est conçu dans le respect de votre vie privée. Nous vous encourageons à utiliser cet outil en toute confiance, sachant qu'il ne collecte pas de données personnelles et conserve vos informations sur votre propre appareil. Ci-dessous, nous exposons nos pratiques de traitement des données et les conditions d'utilisation de cette application web de manière claire et formelle.",
+      "Signature Capture est open source et conçu pour conserver les images de signature sur votre appareil. Le site hébergé utilise aussi Cloudflare Web Analytics, axé sur la confidentialité, afin de comprendre le trafic agrégé et les performances.",
     privacy_privacy_heading: 'Confidentialité et traitement des données',
     privacy_local_processing:
       "Traitement local: Tout le traitement d'image se déroule localement dans votre navigateur (côté client). Les signatures capturées ne quittent jamais votre appareil et ne sont pas téléchargées sur un serveur. Cela signifie vos images de signature restent privées et sous votre contrôle à tout moment.",
     privacy_no_data:
-      "Aucune collecte de données personnelles: Nous ne collectons aucune information personnelle ou données identifiables. L'outil ne stocke, ne transmet ni ne partage votre nom, votre signature ou tout autre détail personnel. Vous pouvez utiliser Signature Capture sans craindre une collecte de données cachée.",
+      "Données de signature: L'application ne demande pas de compte et ne stocke, ne transmet ni ne partage votre image de signature.",
+    privacy_analytics:
+      "Analytique: Le site hébergé charge Cloudflare Web Analytics pour collecter des mesures agrégées de pages vues et de performances. Cloudflare indique que cette balise analytique n'utilise ni cookies ni stockage local, et l'application ne l'utilise pas pour identifier les utilisateurs ni collecter des images de signature.",
     privacy_terms_heading: "Conditions d'utilisation et clause de non-responsabilité",
     privacy_no_warranties:
       "Aucune garantie fournie: Cette application web est fournie « en l'état », sans garanties ni promesses. Nous ne garantissons pas que Signature Capture répondra à vos besoins, fonctionnera sans interruption ou sera exempt d'erreurs. Toutes les fonctionnalités sont offertes sans garantie expresse ou implicite (y compris les garanties de performance, de sécurité ou d'adéquation à un usage particulier).",
@@ -431,7 +437,7 @@ const translations: Record<Language, Record<string, string>> = {
     faq_a_install:
       '可以。网站已经包含 PWA 安装所需的技术配置：HTTPS 托管、网页应用清单、应用图标、启动 URL、全屏显示模式和 service worker。请使用 Android 10+ 和支持安装的最新版浏览器，或在 iOS/iPadOS 16.4+ 上使用 Safari；相机拍摄仍需要浏览器相机权限。',
     faq_q4: '我的签名安全吗？',
-    faq_a4: '图像不会离开你的设备，除非你选择下载。我们不会存储或传输你的数据。',
+    faq_a4: '签名图像不会离开你的设备，除非你选择下载。我们不会存储或传输你的签名数据。',
     faq_q_open_source: '这个项目是开源的吗？',
     faq_a_open_source: '是的。你可以查看代码、本地运行，并部署自己的版本。',
     faq_q5: '如果摄像头无法工作怎么办？',
@@ -440,12 +446,14 @@ const translations: Record<Language, Record<string, string>> = {
     privacy_meta_description: 'Signature Capture 网站的隐私实践。',
     privacy_heading: '隐私政策',
     privacy_intro:
-      'Signature Capture 在设计时充分考虑了隐私。请放心使用，本工具不会收集个人数据，且所有信息都留存在你的设备上。下面我们以清晰正式的方式概述我们的数据处理做法及本网站的使用条款。',
+      'Signature Capture 是开源项目，设计目标是让签名图像保留在你的设备上。托管的网站还使用以隐私为先的 Cloudflare Web Analytics，以了解汇总流量和性能。',
     privacy_privacy_heading: '隐私与数据处理',
     privacy_local_processing:
       '本地处理： 所有图像处理都在你的浏览器本地完成（客户端）。捕获的签名绝不会离开你的设备或上传到任何服务器。这意味着你的签名图片始终私密且由你掌控。',
     privacy_no_data:
-      '不收集个人数据： 我们不会收集任何个人信息或可识别的数据。该工具不会存储、传输或分享你的姓名、签名或其他个人信息。你可以放心使用，不必担心隐藏的数据收集。',
+      '签名数据： 本应用不要求创建账户，也不会存储、传输或分享你的签名图像。',
+    privacy_analytics:
+      '分析： 托管的网站会加载 Cloudflare Web Analytics，用于收集汇总的页面浏览和性能指标。Cloudflare 表示该分析 beacon 不使用 cookie 或本地存储，本应用也不会使用它来识别用户或收集签名图像。',
     privacy_terms_heading: '使用条款与免责声明',
     privacy_no_warranties:
       '不提供任何担保： 本网站按“原样”提供，不附带任何保证或承诺。我们不保证 Signature Capture 能满足你的需求、持续运行或没有错误。所有功能均不含任何明示或暗示的保证（包括性能、安全或适用于特定目的的保证）。',
