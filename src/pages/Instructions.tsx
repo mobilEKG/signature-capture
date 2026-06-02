@@ -1,6 +1,6 @@
-import { Helmet } from 'react-helmet-async'
 import { useI18n } from '../core/i18n.tsx'
 import { canonicalUrl } from '../core/metadata.ts'
+import PageMeta from '../core/PageMeta.tsx'
 
 export default function Instructions() {
   const { t } = useI18n()
@@ -8,19 +8,12 @@ export default function Instructions() {
   const description = t('instructions_meta_description')
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl('/instructions')} />
-        <meta property="og:image" content={canonicalUrl('/social-preview.png')} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={canonicalUrl('/social-preview.png')} />
-        <link rel="canonical" href={canonicalUrl('/instructions')} />
-      </Helmet>
+      <PageMeta
+        title={title}
+        description={description}
+        canonicalPath="/instructions"
+        imageUrl={canonicalUrl('/social-preview.png')}
+      />
       <div className="page-container">
       <article className="article-panel">
       <h1 className="article-title">
