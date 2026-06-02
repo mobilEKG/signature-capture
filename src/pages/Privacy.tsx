@@ -41,6 +41,10 @@ export default function Privacy() {
             <i className="ri-user-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
             <span>{t('privacy_no_data')}</span>
           </li>
+          <li>
+            <i className="ri-line-chart-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
+            <span>{t('privacy_analytics')}</span>
+          </li>
         </ul>
         <h2 className="article-section-title">
           <i
