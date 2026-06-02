@@ -14,6 +14,7 @@ dist-ssr
 vapid-keys.json
 .env
 .env.*
+.superpowers/
 
 # Editor directories and files
 .vscode/*
