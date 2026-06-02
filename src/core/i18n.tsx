@@ -35,6 +35,9 @@ const translations: Record<Language, Record<string, string>> = {
     select_camera: 'Select camera...',
     preview_placeholder: 'Capture your signature to see it here',
     camera_not_ready: 'Camera is still starting',
+    camera_permission_denied:
+      'Camera access is blocked. Allow camera permission in your browser, then try again.',
+    camera_retry: 'Try camera again',
     camera_selected_message: 'Using best camera for sharper captures',
     start_camera: 'Start camera',
     stop_camera: 'Stop camera',
@@ -141,6 +144,9 @@ const translations: Record<Language, Record<string, string>> = {
     select_camera: 'Seleccionar cámara...',
     preview_placeholder: 'Captura tu firma para verla aquí',
     camera_not_ready: 'La cámara aún se está iniciando',
+    camera_permission_denied:
+      'El acceso a la cámara está bloqueado. Permite el permiso de cámara en tu navegador y vuelve a intentarlo.',
+    camera_retry: 'Volver a intentar',
     camera_selected_message: 'Usando la mejor cámara para capturas más nítidas',
     start_camera: 'Iniciar cámara',
     stop_camera: 'Detener cámara',
@@ -250,6 +256,9 @@ const translations: Record<Language, Record<string, string>> = {
     select_camera: 'Choisir la caméra...',
     preview_placeholder: 'Capturez votre signature pour la voir ici',
     camera_not_ready: 'La caméra démarre encore',
+    camera_permission_denied:
+      "L'accès à la caméra est bloqué. Autorisez la caméra dans votre navigateur, puis réessayez.",
+    camera_retry: 'Réessayer la caméra',
     camera_selected_message: 'Utilisation de la meilleure caméra pour des captures plus nettes',
     start_camera: 'Démarrer la caméra',
     stop_camera: 'Arrêter la caméra',
@@ -360,6 +369,9 @@ const translations: Record<Language, Record<string, string>> = {
     select_camera: '选择摄像头...',
     preview_placeholder: '拍摄签名以在此处查看',
     camera_not_ready: '摄像头仍在启动',
+    camera_permission_denied:
+      '相机访问被阻止。请在浏览器中允许相机权限，然后重试。',
+    camera_retry: '重试相机',
     camera_selected_message: '已启用最佳摄像头以获得更清晰的拍摄',
     start_camera: '启动摄像头',
     stop_camera: '停止摄像头',
