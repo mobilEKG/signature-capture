@@ -1,0 +1,67 @@
+name: Codex Auto Review
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  request-review:
+    name: Request Codex review
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+
+    steps:
+      - name: Verify Codex automation token
+        env:
+          CODEX_AUTOMATION_GITHUB_TOKEN: ${{ secrets.CODEX_AUTOMATION_GITHUB_TOKEN }}
+        run: |
+          if [ -z "$CODEX_AUTOMATION_GITHUB_TOKEN" ]; then
+            echo "::error::Missing required repository secret: CODEX_AUTOMATION_GITHUB_TOKEN"
+            exit 1
+          fi
+
+      - name: Request review once per PR head SHA
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CODEX_AUTOMATION_GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const headSha = pr.head.sha;
+            const marker = `<!-- codex-auto-review:head-sha=${headSha} -->`;
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: pr.number,
+              per_page: 100,
+            });
+
+            if (comments.some((comment) => comment.body?.includes(marker))) {
+              core.info(`Codex review request already exists for ${headSha}.`);
+              return;
+            }
+
+            const promptByAction = {
+              opened: "opened",
+              reopened: "reopened",
+              synchronize: "updated",
+              ready_for_review: "ready",
+            };
+            const promptState = promptByAction[context.payload.action] || "updated";
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: pr.number,
+              body: `${marker}\n@codex review this ${promptState} PR`,
+            });
+
