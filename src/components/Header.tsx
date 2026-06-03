@@ -59,7 +59,7 @@ export default function Header() {
           aria-expanded={open}
           aria-controls="mobile-menu-drawer"
         >
-          <i className="ri-menu-line ri-lg"></i>
+          <i className="ri-menu-line ri-lg" aria-hidden="true"></i>
         </button>
         {open && <MenuDrawer links={links} onClose={closeMenu} />}
       </div>
