@@ -34,8 +34,9 @@ jobs:
             const pr = context.payload.pull_request;
             const review = context.payload.review;
             const reviewAuthor = review.user?.login?.toLowerCase() || "";
+            const codexReviewerLogins = new Set(["codex", "codex[bot]"]);
 
-            if (!reviewAuthor.includes("codex")) {
+            if (!codexReviewerLogins.has(reviewAuthor)) {
               core.info(`Skipping non-Codex review from ${review.user?.login || "unknown"}.`);
               return;
             }

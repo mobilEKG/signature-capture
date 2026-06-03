@@ -55,7 +55,7 @@ export default function Header() {
           type="button"
           className="surface-button h-10 w-10 md:hidden"
           onClick={openMenu}
-          aria-label="Open menu"
+          aria-label={t('open_menu')}
           aria-expanded={open}
           aria-controls="mobile-menu-drawer"
         >
