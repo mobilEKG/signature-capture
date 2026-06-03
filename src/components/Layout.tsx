@@ -16,12 +16,12 @@ export default function Layout() {
       <div className="info-footer">
         <div
           className={`page-container relative ${infoOpen ? 'py-1' : 'py-1'}`}
-          style={{ minHeight: infoOpen ? '30px' : '24px' }}
+          style={{ minHeight: infoOpen ? '36px' : '32px' }}
         >
           <button
             onClick={() => setInfoOpen(!infoOpen)}
             className="info-toggle"
-            aria-label={infoOpen ? 'Hide info' : 'Show info'}
+            aria-label={infoOpen ? t('hide_info') : t('show_info')}
           >
             <i
               className={`ri-${infoOpen ? 'arrow-down-s-line' : 'arrow-up-s-line'} ri-lg`}

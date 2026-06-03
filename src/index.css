@@ -244,7 +244,7 @@ body {
   }
   .info-toggle {
     color: var(--color-muted-soft);
-    @apply absolute right-3 top-1 grid h-7 w-7 place-items-center rounded-md;
+    @apply absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-md;
   }
   .info-toggle:hover {
     background-color: var(--color-ink-soft);

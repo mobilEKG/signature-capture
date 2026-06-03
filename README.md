@@ -166,6 +166,10 @@ npm run build
 npm run deploy
 ```
 
+Cloudflare Web Analytics is opt-in for deployments. Set
+`VITE_CLOUDFLARE_ANALYTICS_TOKEN` in the deployment environment to load the
+beacon on public hostnames; localhost previews skip it even when a token exists.
+
 ## Privacy Model
 
 Signature images are processed locally in the browser. The app does not require an account and does not send captured images to a server.
