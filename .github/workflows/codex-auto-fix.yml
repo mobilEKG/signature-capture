@@ -1,0 +1,79 @@
+name: Codex Auto Fix Request
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  request-fix:
+    name: Request Codex fixes
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+
+    steps:
+      - name: Verify Codex automation token
+        env:
+          CODEX_AUTOMATION_GITHUB_TOKEN: ${{ secrets.CODEX_AUTOMATION_GITHUB_TOKEN }}
+        run: |
+          if [ -z "$CODEX_AUTOMATION_GITHUB_TOKEN" ]; then
+            echo "::error::Missing required repository secret: CODEX_AUTOMATION_GITHUB_TOKEN"
+            exit 1
+          fi
+
+      - name: Request fixes once per Codex review
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CODEX_AUTOMATION_GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const review = context.payload.review;
+            const reviewAuthor = review.user?.login?.toLowerCase() || "";
+
+            if (!reviewAuthor.includes("codex")) {
+              core.info(`Skipping non-Codex review from ${review.user?.login || "unknown"}.`);
+              return;
+            }
+
+            const reviewComments = await github.paginate(github.rest.pulls.listReviewComments, {
+              owner,
+              repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+            const inlineFindings = reviewComments.filter((comment) => (
+              comment.pull_request_review_id === review.id
+                && !comment.in_reply_to_id
+                && comment.body?.trim()
+            ));
+
+            if (inlineFindings.length === 0) {
+              core.info(`Codex review ${review.id} did not include inline findings.`);
+              return;
+            }
+
+            const marker = `<!-- codex-auto-fix:review-id=${review.id} -->`;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: pr.number,
+              per_page: 100,
+            });
+
+            if (comments.some((comment) => comment.body?.includes(marker))) {
+              core.info(`Codex fix request already exists for review ${review.id}.`);
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: pr.number,
+              body: `${marker}\n@codex address the Codex review findings from this review`,
+            });
+
