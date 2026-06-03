@@ -1,7 +1,7 @@
 export const CLOUDFLARE_ANALYTICS_SRC =
   'https://static.cloudflareinsights.com/beacon.min.js'
 
-const localHostnames = new Set(['localhost', '127.0.0.1', '::1'])
+const localHostnames = new Set(['localhost', '127.0.0.1', '::1', '[::1]'])
 
 interface AnalyticsInput {
   token: string | undefined

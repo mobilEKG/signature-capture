@@ -14,14 +14,17 @@ describe('Cloudflare analytics config', () => {
     ).toBeNull()
   })
 
-  it('does not load analytics on localhost even when a token exists', () => {
-    expect(
-      getCloudflareAnalyticsConfig({
-        token: 'token-from-host',
-        hostname: '127.0.0.1',
-      }),
-    ).toBeNull()
-  })
+  it.each(['localhost', '127.0.0.1', '::1', '[::1]'])(
+    'does not load analytics on local hostname %s even when a token exists',
+    (hostname) => {
+      expect(
+        getCloudflareAnalyticsConfig({
+          token: 'token-from-host',
+          hostname,
+        }),
+      ).toBeNull()
+    },
+  )
 
   it('loads analytics only for an explicit token on a public hostname', () => {
     expect(
