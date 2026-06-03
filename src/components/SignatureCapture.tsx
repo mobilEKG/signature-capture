@@ -12,6 +12,7 @@ import {
   replaceVideoStream,
   stopMediaStream,
 } from '../core/mediaStreams.ts'
+import { getCameraActionLabelKey } from '../core/cameraControls.ts'
 
 // Width-to-height ratio for the signature frame
 const SIGNATURE_RECT_RATIO = 3 // 3:1 by default
@@ -439,6 +440,12 @@ function SignatureCapture() {
     processedImageDataUrl: processedImage,
   })
   const canCapture = Boolean(stream && videoReady)
+  const cameraActionLabel = t(
+    getCameraActionLabelKey({
+      cameraCount: videoDevices.length,
+      hasStream: Boolean(stream),
+    }),
+  )
   
   return (
     <div className="page-container capture-page relative flex h-full flex-col items-center">
@@ -549,7 +556,8 @@ function SignatureCapture() {
                     className={`capture-icon-button ${
                       isMirrored ? 'left-2 transform scale-x-[-1]' : 'right-2'
                   }`}
-                  aria-label={t('select_camera')}
+                  aria-label={cameraActionLabel}
+                  title={cameraActionLabel}
                 >
                     <i className="ri-arrow-left-right-line icon-accent" />
                   </button>
