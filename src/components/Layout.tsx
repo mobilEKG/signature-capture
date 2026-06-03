@@ -23,7 +23,10 @@ export default function Layout() {
             className="info-toggle"
             aria-label={infoOpen ? 'Hide info' : 'Show info'}
           >
-            <i className={`ri-${infoOpen ? 'arrow-down-s-line' : 'arrow-up-s-line'} ri-lg`}></i>
+            <i
+              className={`ri-${infoOpen ? 'arrow-down-s-line' : 'arrow-up-s-line'} ri-lg`}
+              aria-hidden="true"
+            ></i>
           </button>
           {infoOpen && (
             <section>

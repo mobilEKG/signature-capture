@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { getCameraActionLabelKey } from './cameraControls.ts'
+import {
+  getCameraActionIconClass,
+  getCameraActionLabelKey,
+} from './cameraControls.ts'
 
 describe('camera action accessibility label', () => {
   it('announces camera selection when multiple cameras are available', () => {
@@ -18,5 +21,17 @@ describe('camera action accessibility label', () => {
     expect(
       getCameraActionLabelKey({ cameraCount: 1, hasStream: true }),
     ).toBe('stop_camera')
+  })
+
+  it('uses a distinct icon for every camera action', () => {
+    expect(
+      getCameraActionIconClass({ cameraCount: 2, hasStream: true }),
+    ).toBe('ri-camera-switch-line')
+    expect(
+      getCameraActionIconClass({ cameraCount: 1, hasStream: false }),
+    ).toBe('ri-camera-line')
+    expect(
+      getCameraActionIconClass({ cameraCount: 1, hasStream: true }),
+    ).toBe('ri-camera-off-line')
   })
 })

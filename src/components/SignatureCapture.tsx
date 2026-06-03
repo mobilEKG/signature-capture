@@ -12,7 +12,10 @@ import {
   replaceVideoStream,
   stopMediaStream,
 } from '../core/mediaStreams.ts'
-import { getCameraActionLabelKey } from '../core/cameraControls.ts'
+import {
+  getCameraActionIconClass,
+  getCameraActionLabelKey,
+} from '../core/cameraControls.ts'
 
 // Width-to-height ratio for the signature frame
 const SIGNATURE_RECT_RATIO = 3 // 3:1 by default
@@ -446,6 +449,10 @@ function SignatureCapture() {
       hasStream: Boolean(stream),
     }),
   )
+  const cameraActionIconClass = getCameraActionIconClass({
+    cameraCount: videoDevices.length,
+    hasStream: Boolean(stream),
+  })
   
   return (
     <div className="page-container capture-page relative flex h-full flex-col items-center">
@@ -559,7 +566,10 @@ function SignatureCapture() {
                   aria-label={cameraActionLabel}
                   title={cameraActionLabel}
                 >
-                    <i className="ri-arrow-left-right-line icon-accent" />
+                    <i
+                      className={`${cameraActionIconClass} icon-accent`}
+                      aria-hidden="true"
+                    />
                   </button>
                 )}
               </div>
@@ -650,7 +660,7 @@ function SignatureCapture() {
                       overlayGap * 2,
                   }}
                 >
-                  <i className="ri-ball-pen-line ri-lg"></i>
+                  <i className="ri-ball-pen-line ri-lg" aria-hidden="true"></i>
                   <span>{t('preview_placeholder')}</span>
                 </div>
               )}

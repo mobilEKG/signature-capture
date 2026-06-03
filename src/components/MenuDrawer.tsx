@@ -103,7 +103,7 @@ export default function MenuDrawer({ links, onClose }: Props) {
             onClick={onClose}
             aria-label={t('close_menu')}
           >
-            <i className="ri-close-line ri-lg"></i>
+            <i className="ri-close-line ri-lg" aria-hidden="true"></i>
           </button>
         </div>
 
