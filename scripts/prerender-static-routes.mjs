@@ -26,44 +26,7 @@ const routes = [
     title: 'FAQ - Signature Capture',
     description:
       'Answers about transparent PNG signature downloads, browser-only processing, camera permissions, privacy, and open-source self-hosting.',
-    structuredData: {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'How do I remove the white background from a signature?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Use a dark pen on white paper, place the signature inside the guide box, tap Capture, then Clean. The app removes the paper background and keeps the signature strokes.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'How do I make a handwritten signature transparent?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'After capture, the Clean and Save actions export the signature as a PNG with transparent background pixels.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Can I use the PNG in Word, PDF, or forms?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Yes. The transparent PNG is designed for document overlays, forms, Word files, PDF workflows, and other places that accept image signatures.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Is this a digital signature or only a signature image?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'This creates a transparent signature image. It is not a cryptographic digital signature and does not verify document identity or integrity.',
-          },
-        },
-      ],
-    },
+    structuredData: () => faqStructuredData,
   },
   {
     path: '/about',
@@ -78,6 +41,70 @@ const routes = [
       'Privacy practices for Signature Capture. Signature images are processed locally in your browser and are not uploaded to a server.',
   },
 ]
+
+
+const faqContent = [
+  {
+    question: 'How do I remove the white background from a signature?',
+    answer:
+      'Use a dark pen on white paper, place the signature inside the guide box, tap Capture, then Clean. The app removes the paper background and keeps the signature strokes.',
+  },
+  {
+    question: 'How do I make a handwritten signature transparent?',
+    answer:
+      'After capture, the Clean and Save actions export the signature as a PNG with transparent background pixels.',
+  },
+  {
+    question: 'Can I use the PNG in Word, PDF, or forms?',
+    answer:
+      'Yes. The transparent PNG is designed for document overlays, forms, Word files, PDF workflows, and other places that accept image signatures.',
+  },
+  {
+    question: 'Is this a digital signature or only a signature image?',
+    answer:
+      'This creates a transparent signature image. It is not a cryptographic digital signature and does not verify document identity or integrity.',
+  },
+  {
+    question: 'What format will I receive?',
+    answer: 'Your signature downloads as a high-quality PNG with a transparent background.',
+  },
+  {
+    question: 'Do I need special software?',
+    answer: 'No, everything works directly in your browser.',
+  },
+  {
+    question: 'Can I install it on Android or iOS?',
+    answer:
+      'Yes. The site includes the PWA install pieces: HTTPS hosting, web app manifest, app icons, start URL, fullscreen display mode, and service worker. Use Android 10+ with a current install-capable browser, or iOS/iPadOS 16.4+ with Safari; camera capture still requires browser camera permission.',
+  },
+  {
+    question: 'Is my signature safe?',
+    answer:
+      'Your signature image never leaves your device unless you choose to download it. We do not store or transmit your signature data.',
+  },
+  {
+    question: 'Is the project open source?',
+    answer: 'Yes. You can inspect the code, run it locally, and deploy your own copy.',
+  },
+  {
+    question: 'What if my camera does not work?',
+    answer:
+      'Check that your browser has permission to access the camera and refresh the page, or troubleshoot your camera settings.',
+  },
+]
+
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqContent.slice(0, 4).map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+}
 
 const homeSeoContent = {
   heading: 'Free signature background remover',
@@ -153,11 +180,39 @@ const renderHomepageBody = () => {
         </article>`
 }
 
+
+const renderFAQBody = () => {
+  const itemsHtml = faqContent
+    .map(
+      (item) => `
+              <div class="article-card p-4">
+                <dt class="article-card-title">${escapeHtml(item.question)}</dt>
+                <dd class="mt-1">${escapeHtml(item.answer)}</dd>
+              </div>`,
+    )
+    .join('')
+
+  return `<div class="page-container" data-prerendered-faq>
+          <article class="article-panel">
+            <h1 class="article-title">Frequently Asked Questions</h1>
+            <dl class="space-y-4">${itemsHtml}
+            </dl>
+          </article>
+        </div>`
+}
+
 const renderBody = (html, route) => {
-  if (route.path !== '/') return html
+  const prerenderedBody =
+    route.path === '/'
+      ? renderHomepageBody()
+      : route.path === '/faq'
+        ? renderFAQBody()
+        : ''
+
+  if (!prerenderedBody) return html
 
   return html.replace('<div id="root"></div>', `<div id="root">
-        ${renderHomepageBody()}
+        ${prerenderedBody}
       </div>`)
 }
 
@@ -220,7 +275,11 @@ const renderHead = (html, route) => {
   )
 
   const routeStructuredData =
-    route.path === '/' ? structuredData : route.structuredData
+    route.path === '/'
+      ? structuredData
+      : typeof route.structuredData === 'function'
+        ? route.structuredData()
+        : route.structuredData
 
   if (routeStructuredData) {
     next = next.replace(
