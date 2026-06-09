@@ -3,9 +3,9 @@ import { REPOSITORY_URL, canonicalUrl } from '../core/metadata.ts'
 import PageMeta from '../core/PageMeta.tsx'
 
 const pageTitle =
-  'Free Signature Background Remover | Transparent PNG Signature'
+  'Free Signature Background Remover | Transparent PNG, No Upload'
 const pageDescription =
-  'Capture a handwritten signature with your camera and download a transparent PNG. Open source, browser only, no account, no image upload.'
+  'Capture a handwritten signature with your phone or desktop camera, remove the paper background locally in your browser, and download a transparent PNG. Free, open source, no upload.'
 
 const softwareApplicationStructuredData = {
   '@context': 'https://schema.org',
@@ -22,7 +22,7 @@ const softwareApplicationStructuredData = {
     priceCurrency: 'USD',
   },
   description:
-    'Open source browser app that captures a handwritten signature and exports a transparent PNG without uploading the image.',
+    'Free open source browser app that removes the paper background from a handwritten signature and exports a transparent PNG without uploading the image.',
   sameAs: [REPOSITORY_URL],
 }
 

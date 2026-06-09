@@ -11,9 +11,9 @@ const defaultImage = `${siteUrl}/social-preview.png`
 const routes = [
   {
     path: '/',
-    title: 'Free Signature Background Remover | Transparent PNG Signature',
+    title: 'Free Signature Background Remover | Transparent PNG, No Upload',
     description:
-      'Capture a handwritten signature with your camera and download a transparent PNG. Open source, browser only, no account, no image upload.',
+      'Capture a handwritten signature with your phone or desktop camera, remove the paper background locally in your browser, and download a transparent PNG. Free, open source, no upload.',
   },
   {
     path: '/instructions',
@@ -56,7 +56,7 @@ const structuredData = {
     priceCurrency: 'USD',
   },
   description:
-    'Open source browser app that captures a handwritten signature and exports a transparent PNG without uploading the image.',
+    'Free open source browser app that removes the paper background from a handwritten signature and exports a transparent PNG without uploading the image.',
 }
 
 const escapeHtml = (value) =>

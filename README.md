@@ -1,11 +1,12 @@
-# Signature Capture
+# Signature Capture: Free Open Source Signature Background Remover
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-c8ff2f.svg)](./LICENSE)
+[![Live app](https://img.shields.io/badge/live-signature.codeant.studio-2e7d32)](https://signature.codeant.studio/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Runtime: Cloudflare Workers](https://img.shields.io/badge/Runtime-Cloudflare%20Workers-f38020.svg)](https://developers.cloudflare.com/workers/static-assets/)
 
-Open-source browser app for turning a handwritten signature into a transparent PNG.
+Free open source browser app for removing the paper background from a handwritten signature and saving it as a transparent PNG.
 
-The app uses your camera, crops the signature guide area, removes the paper background in the browser, and lets you download the cleaned image. Captured images are not uploaded.
+The app uses your phone or desktop camera, crops the signature guide area, removes the paper background locally in your browser, and lets you download the cleaned image. Captured images are not uploaded.
 
 This repository contains the React/Vite app and the Cloudflare Workers Static Assets deployment configuration.
 
