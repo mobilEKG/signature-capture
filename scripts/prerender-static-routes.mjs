@@ -79,6 +79,31 @@ const routes = [
   },
 ]
 
+const homeSeoContent = {
+  heading: 'Free signature background remover',
+  intro:
+    'Turn a handwritten signature on paper into a transparent PNG directly in your browser. Use your camera, clean the paper background, then download or copy the finished signature image.',
+  stepsHeading: 'How it works',
+  cards: [
+    {
+      title: 'Capture',
+      body: 'Place your handwritten signature inside the guide box and capture a frame from your phone or desktop camera.',
+    },
+    {
+      title: 'Remove the white paper background',
+      body: 'The app crops the guide area and converts the signature strokes into a black-on-transparent PNG.',
+    },
+    {
+      title: 'Download a transparent PNG',
+      body: 'Save the finished signature image for Word documents, PDFs, forms, and document overlays.',
+    },
+    {
+      title: 'No upload',
+      body: 'Signature images are processed locally in your browser. The app does not ask for an account and does not upload your signature.',
+    },
+  ],
+}
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -105,6 +130,36 @@ const escapeHtml = (value) =>
     .replaceAll('>', '&gt;')
 
 const replaceTag = (html, pattern, replacement) => html.replace(pattern, replacement)
+
+const renderHomepageBody = () => {
+  const cardHtml = homeSeoContent.cards
+    .map(
+      (card) => `
+              <section class="article-card p-4">
+                <h3 class="article-card-title">${escapeHtml(card.title)}</h3>
+                <p>${escapeHtml(card.body)}</p>
+              </section>`,
+    )
+    .join('')
+
+  return `<article class="page-container pb-6 pt-4" data-prerendered-home-seo>
+          <div class="article-panel">
+            <h1 class="article-title">${escapeHtml(homeSeoContent.heading)}</h1>
+            <p>${escapeHtml(homeSeoContent.intro)}</p>
+            <h2 class="article-card-title mt-4">${escapeHtml(homeSeoContent.stepsHeading)}</h2>
+            <div class="grid gap-3 md:grid-cols-2">${cardHtml}
+            </div>
+          </div>
+        </article>`
+}
+
+const renderBody = (html, route) => {
+  if (route.path !== '/') return html
+
+  return html.replace('<div id="root"></div>', `<div id="root">
+        ${renderHomepageBody()}
+      </div>`)
+}
 
 const renderHead = (html, route) => {
   const canonical = `${siteUrl}${route.path === '/' ? '/' : route.path}`
@@ -185,7 +240,7 @@ const renderHead = (html, route) => {
 const template = await readFile(join(distRoot, 'index.html'), 'utf8')
 
 for (const route of routes) {
-  const html = renderHead(template, route)
+  const html = renderBody(renderHead(template, route), route)
   if (route.path === '/') {
     await writeFile(join(distRoot, 'index.html'), html)
     continue

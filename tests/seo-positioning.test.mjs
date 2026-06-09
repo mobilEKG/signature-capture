@@ -31,6 +31,12 @@ describe('SEO positioning copy', () => {
   it('renders crawlable homepage copy for the reviewed long-tail queries', () => {
     const capture = readFileSync('src/pages/Capture.tsx', 'utf8')
     const i18n = readFileSync('src/core/i18n.tsx', 'utf8')
+    const prerender = readFileSync('scripts/prerender-static-routes.mjs', 'utf8')
+
+    expect(capture).toContain('homeSeoCards.map')
+    expect(capture).toContain('className="h-full min-h-full"')
+    expect(prerender).toContain('data-prerendered-home-seo')
+    expect(prerender).toContain('renderBody(renderHead(template, route), route)')
 
     for (const key of [
       'home_seo_heading',
@@ -38,8 +44,17 @@ describe('SEO positioning copy', () => {
       'home_seo_transparent_png',
       'home_seo_no_upload',
     ]) {
-      expect(capture).toContain(`t('${key}')`)
+      expect(capture).toContain(key)
       expect(i18n).toContain(`${key}:`)
+    }
+
+    for (const copy of [
+      'Free signature background remover',
+      'Remove the white paper background',
+      'Download a transparent PNG',
+      'Signature images are processed locally in your browser.',
+    ]) {
+      expect(prerender).toContain(copy)
     }
   })
 
