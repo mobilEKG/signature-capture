@@ -10,6 +10,41 @@ export default function FAQ() {
   const { t } = useI18n()
   const title = t('faq_meta_title')
   const description = t('faq_meta_description')
+  const priorityFaqs = [
+    {
+      question: t('faq_q_remove_white_background'),
+      answer: t('faq_a_remove_white_background'),
+      icon: 'ri-eraser-line',
+    },
+    {
+      question: t('faq_q_make_transparent'),
+      answer: t('faq_a_make_transparent'),
+      icon: 'ri-contrast-drop-line',
+    },
+    {
+      question: t('faq_q_use_in_documents'),
+      answer: t('faq_a_use_in_documents'),
+      icon: 'ri-file-copy-2-line',
+    },
+    {
+      question: t('faq_q_digital_signature'),
+      answer: t('faq_a_digital_signature'),
+      icon: 'ri-shield-keyhole-line',
+    },
+  ]
+  const faqStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: priorityFaqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer,
+      },
+    })),
+  }
+
   return (
     <>
       <PageMeta
@@ -17,6 +52,7 @@ export default function FAQ() {
         description={description}
         canonicalPath="/faq"
         imageUrl={canonicalUrl('/social-preview.png')}
+        structuredData={faqStructuredData}
       />
       <div className="page-container">
       <article className="article-panel">
@@ -25,6 +61,18 @@ export default function FAQ() {
         {t('faq_heading')}
       </h1>
       <dl className="space-y-4">
+        {priorityFaqs.map(({ question, answer, icon }) => (
+          <div className="article-card p-4" key={question}>
+            <dt className="article-card-title">
+              <i
+                className={`${icon} ri-lg mr-1 align-middle icon-accent`}
+                aria-hidden="true"
+              ></i>
+              {question}
+            </dt>
+            <dd className="mt-1">{answer}</dd>
+          </div>
+        ))}
         <div className="article-card p-4">
           <dt className="article-card-title">
             <i className="ri-file-image-line ri-lg mr-1 align-middle icon-accent" aria-hidden="true"></i>
