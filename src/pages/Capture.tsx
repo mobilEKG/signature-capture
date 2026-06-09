@@ -8,6 +8,25 @@ const pageTitle =
 const pageDescription =
   'Capture a handwritten signature with your phone or desktop camera, remove the paper background locally in your browser, and download a transparent PNG. Free, open source, no upload.'
 
+const homeSeoCards = [
+  {
+    titleKey: 'home_seo_capture_title',
+    bodyKey: 'home_seo_capture_body',
+  },
+  {
+    titleKey: 'home_seo_remove_background',
+    bodyKey: 'home_seo_remove_background_body',
+  },
+  {
+    titleKey: 'home_seo_transparent_png',
+    bodyKey: 'home_seo_transparent_png_body',
+  },
+  {
+    titleKey: 'home_seo_no_upload',
+    bodyKey: 'home_seo_no_upload_body',
+  },
+] as const
+
 const softwareApplicationStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -39,46 +58,26 @@ export default function Capture() {
         imageUrl={canonicalUrl('/social-preview.png')}
         structuredData={softwareApplicationStructuredData}
       />
-      <div className="flex flex-col h-full">
-        <section id="tool" className="flex-grow">
-          <SignatureCapture />
-        </section>
-        <article className="page-container pb-6">
-          <div className="article-panel">
-            <h1 className="article-title">{t('home_seo_heading')}</h1>
-            <p>{t('home_seo_intro')}</p>
-            <h2 className="article-card-title mt-4">
-              {t('home_seo_steps_heading')}
-            </h2>
-            <div className="grid gap-3 md:grid-cols-2">
-              <section className="article-card p-4">
-                <h3 className="article-card-title">
-                  {t('home_seo_capture_title')}
-                </h3>
-                <p>{t('home_seo_capture_body')}</p>
+      <section id="tool" className="h-full min-h-full">
+        <SignatureCapture />
+      </section>
+      <article className="page-container pb-6 pt-4">
+        <div className="article-panel">
+          <h1 className="article-title">{t('home_seo_heading')}</h1>
+          <p>{t('home_seo_intro')}</p>
+          <h2 className="article-card-title mt-4">
+            {t('home_seo_steps_heading')}
+          </h2>
+          <div className="grid gap-3 md:grid-cols-2">
+            {homeSeoCards.map((card) => (
+              <section className="article-card p-4" key={card.titleKey}>
+                <h3 className="article-card-title">{t(card.titleKey)}</h3>
+                <p>{t(card.bodyKey)}</p>
               </section>
-              <section className="article-card p-4">
-                <h3 className="article-card-title">
-                  {t('home_seo_remove_background')}
-                </h3>
-                <p>{t('home_seo_remove_background_body')}</p>
-              </section>
-              <section className="article-card p-4">
-                <h3 className="article-card-title">
-                  {t('home_seo_transparent_png')}
-                </h3>
-                <p>{t('home_seo_transparent_png_body')}</p>
-              </section>
-              <section className="article-card p-4">
-                <h3 className="article-card-title">
-                  {t('home_seo_no_upload')}
-                </h3>
-                <p>{t('home_seo_no_upload_body')}</p>
-              </section>
-            </div>
+            ))}
           </div>
-        </article>
-      </div>
+        </div>
+      </article>
     </>
   )
 }
