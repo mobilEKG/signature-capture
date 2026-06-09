@@ -75,5 +75,40 @@ describe('SEO positioning copy', () => {
 
     expect(faq).toContain("'@type': 'FAQPage'")
     expect(prerender).toContain("'@type': 'FAQPage'")
+    expect(prerender).toContain('data-prerendered-faq')
+    expect(prerender).toContain('renderFAQBody()')
+  })
+
+  it('localizes the new SEO and FAQ copy in every supported language', () => {
+    const i18n = readFileSync('src/core/i18n.tsx', 'utf8')
+
+    for (const lang of ['en', 'es', 'fr', 'zh']) {
+      const block = i18n.match(new RegExp(String.raw`\n  ${lang}: \{([\s\S]*?)\n  \}`))?.[1]
+      expect(block, `${lang} translation block`).toBeTruthy()
+
+      for (const key of [
+        'home_seo_heading',
+        'home_seo_intro',
+        'home_seo_steps_heading',
+        'home_seo_capture_title',
+        'home_seo_capture_body',
+        'home_seo_remove_background',
+        'home_seo_remove_background_body',
+        'home_seo_transparent_png',
+        'home_seo_transparent_png_body',
+        'home_seo_no_upload',
+        'home_seo_no_upload_body',
+        'faq_q_remove_white_background',
+        'faq_a_remove_white_background',
+        'faq_q_make_transparent',
+        'faq_a_make_transparent',
+        'faq_q_use_in_documents',
+        'faq_a_use_in_documents',
+        'faq_q_digital_signature',
+        'faq_a_digital_signature',
+      ]) {
+        expect(block, `${lang} has ${key}`).toContain(`${key}:`)
+      }
+    }
   })
 })

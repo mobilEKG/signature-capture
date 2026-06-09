@@ -202,6 +202,22 @@ const translations: Record<Language, Record<string, string>> = {
     home_footer_privacy: ' Política de Privacidad completa',
     home_footer_and: ' y conoce más',
     home_footer_about: ' sobre este proyecto',
+    home_seo_heading: 'Eliminador gratuito de fondo para firmas',
+    home_seo_intro:
+      'Convierte una firma manuscrita en papel en un PNG transparente directamente en tu navegador. Usa la cámara, limpia el fondo del papel y descarga o copia la imagen final de la firma.',
+    home_seo_steps_heading: 'Cómo funciona',
+    home_seo_capture_title: 'Captura',
+    home_seo_capture_body:
+      'Coloca tu firma manuscrita dentro de la caja guía y captura una imagen desde la cámara del teléfono o del escritorio.',
+    home_seo_remove_background: 'Elimina el fondo blanco del papel',
+    home_seo_remove_background_body:
+      'La app recorta el área de la guía y convierte los trazos de la firma en un PNG negro sobre fondo transparente.',
+    home_seo_transparent_png: 'Descarga un PNG transparente',
+    home_seo_transparent_png_body:
+      'Guarda la imagen final de la firma para documentos de Word, PDF, formularios y superposiciones en documentos.',
+    home_seo_no_upload: 'Sin subir archivos',
+    home_seo_no_upload_body:
+      'Las imágenes de firma se procesan localmente en tu navegador. La app no pide una cuenta ni sube tu firma.',
     period_sign: '.',
     instructions_meta_title: 'Instrucciones - Signature Capture',
     instructions_meta_description:
@@ -246,6 +262,21 @@ const translations: Record<Language, Record<string, string>> = {
     faq_meta_description:
       'Respuestas a preguntas frecuentes sobre la herramienta Signature Capture.',
     faq_heading: 'Preguntas frecuentes',
+    faq_q_remove_white_background:
+      '¿Cómo elimino el fondo blanco de una firma?',
+    faq_a_remove_white_background:
+      'Usa un bolígrafo oscuro sobre papel blanco, coloca la firma dentro de la caja guía, toca Capturar y luego Limpiar. La app elimina el fondo del papel y conserva los trazos de la firma.',
+    faq_q_make_transparent:
+      '¿Cómo hago transparente una firma manuscrita?',
+    faq_a_make_transparent:
+      'Después de capturarla, las acciones Limpiar y Guardar exportan la firma como un PNG con píxeles de fondo transparentes.',
+    faq_q_use_in_documents: '¿Puedo usar el PNG en Word, PDF o formularios?',
+    faq_a_use_in_documents:
+      'Sí. El PNG transparente está pensado para superposiciones en documentos, formularios, archivos de Word, flujos PDF y otros lugares que aceptan imágenes de firma.',
+    faq_q_digital_signature:
+      '¿Es una firma digital o solo una imagen de firma?',
+    faq_a_digital_signature:
+      'Esto crea una imagen transparente de la firma. No es una firma digital criptográfica y no verifica la identidad ni la integridad del documento.',
     faq_q2: '\u00bfEn qu\u00e9 formato recibir\u00e9 el archivo?',
     faq_a2:
       'Tu firma se descarga como un PNG de alta calidad con fondo transparente.',
@@ -320,6 +351,22 @@ const translations: Record<Language, Record<string, string>> = {
     home_footer_privacy: ' Politique de Confidentialité complète',
     home_footer_and: ' et découvrez-en plus',
     home_footer_about: ' sur ce projet',
+    home_seo_heading: 'Suppression gratuite du fond de signature',
+    home_seo_intro:
+      'Transformez une signature manuscrite sur papier en PNG transparent directement dans votre navigateur. Utilisez votre caméra, nettoyez le fond papier, puis téléchargez ou copiez l’image de signature terminée.',
+    home_seo_steps_heading: 'Comment ça marche',
+    home_seo_capture_title: 'Capturer',
+    home_seo_capture_body:
+      'Placez votre signature manuscrite dans le cadre guide et capturez une image avec la caméra de votre téléphone ou de votre ordinateur.',
+    home_seo_remove_background: 'Supprimer le fond blanc du papier',
+    home_seo_remove_background_body:
+      'L’application recadre la zone du guide et convertit les traits de signature en PNG noir sur fond transparent.',
+    home_seo_transparent_png: 'Télécharger un PNG transparent',
+    home_seo_transparent_png_body:
+      'Enregistrez l’image finale de signature pour les documents Word, les PDF, les formulaires et les superpositions de documents.',
+    home_seo_no_upload: 'Aucun envoi',
+    home_seo_no_upload_body:
+      'Les images de signature sont traitées localement dans votre navigateur. L’application ne demande pas de compte et ne téléverse pas votre signature.',
     period_sign: '.',
     instructions_meta_title: 'Instructions - Signature Capture',
     instructions_meta_description:
@@ -364,6 +411,21 @@ const translations: Record<Language, Record<string, string>> = {
     faq_meta_description:
       'Questions fréquemment posées sur l\'outil Signature Capture.',
     faq_heading: 'Foire aux questions',
+    faq_q_remove_white_background:
+      'Comment supprimer le fond blanc d’une signature?',
+    faq_a_remove_white_background:
+      'Utilisez un stylo foncé sur papier blanc, placez la signature dans le cadre guide, touchez Capturer puis Nettoyer. L’application supprime le fond papier et conserve les traits de la signature.',
+    faq_q_make_transparent:
+      'Comment rendre une signature manuscrite transparente?',
+    faq_a_make_transparent:
+      'Après la capture, les actions Nettoyer et Enregistrer exportent la signature en PNG avec des pixels de fond transparents.',
+    faq_q_use_in_documents: 'Puis-je utiliser le PNG dans Word, un PDF ou des formulaires?',
+    faq_a_use_in_documents:
+      'Oui. Le PNG transparent est conçu pour les superpositions de documents, les formulaires, les fichiers Word, les flux PDF et les autres emplacements acceptant les images de signature.',
+    faq_q_digital_signature:
+      'Est-ce une signature numérique ou seulement une image de signature?',
+    faq_a_digital_signature:
+      'Cela crée une image de signature transparente. Ce n’est pas une signature numérique cryptographique et cela ne vérifie ni l’identité ni l’intégrité du document.',
     faq_q2: 'Quel format de fichier vais-je obtenir?',
     faq_a2:
       'Votre signature est téléchargée au format PNG de haute qualité avec fond transparent.',
@@ -436,6 +498,22 @@ const translations: Record<Language, Record<string, string>> = {
     home_footer_privacy: '完整隐私政策',
     home_footer_and: '并进一步了解',
     home_footer_about: '该项目',
+    home_seo_heading: '免费签名背景移除工具',
+    home_seo_intro:
+      '直接在浏览器中把纸上的手写签名转换为透明 PNG。使用摄像头拍摄、清理纸张背景，然后下载或复制完成的签名图片。',
+    home_seo_steps_heading: '工作方式',
+    home_seo_capture_title: '拍摄',
+    home_seo_capture_body:
+      '将手写签名放入引导框中，并用手机或桌面摄像头捕获一帧图像。',
+    home_seo_remove_background: '移除白色纸张背景',
+    home_seo_remove_background_body:
+      '应用会裁剪引导区域，并将签名笔画转换成黑色、透明背景的 PNG。',
+    home_seo_transparent_png: '下载透明 PNG',
+    home_seo_transparent_png_body:
+      '保存完成的签名图片，用于 Word 文档、PDF、表单和文档叠加。',
+    home_seo_no_upload: '无需上传',
+    home_seo_no_upload_body:
+      '签名图片会在你的浏览器中本地处理。应用不要求注册账户，也不会上传你的签名。',
     period_sign: '。',
     instructions_meta_title: '说明 - Signature Capture',
     instructions_meta_description:
@@ -472,6 +550,21 @@ const translations: Record<Language, Record<string, string>> = {
     faq_meta_title: '常见问题 - Signature Capture',
     faq_meta_description: '关于 Signature Capture 工具的常见问题。',
     faq_heading: '常见问题',
+    faq_q_remove_white_background:
+      '如何移除签名的白色背景？',
+    faq_a_remove_white_background:
+      '请用深色笔在白纸上书写，将签名放入引导框，点击拍摄，然后点击清理。应用会移除纸张背景并保留签名笔画。',
+    faq_q_make_transparent:
+      '如何让手写签名变成透明背景？',
+    faq_a_make_transparent:
+      '拍摄后，清理和保存操作会将签名导出为带透明背景像素的 PNG。',
+    faq_q_use_in_documents: '可以在 Word、PDF 或表单中使用这个 PNG 吗？',
+    faq_a_use_in_documents:
+      '可以。透明 PNG 适合文档叠加、表单、Word 文件、PDF 流程以及其他接受签名图片的位置。',
+    faq_q_digital_signature:
+      '这是数字签名，还是只是签名图片？',
+    faq_a_digital_signature:
+      '它会创建一张透明的签名图片。它不是加密数字签名，不能验证文档身份或完整性。',
     faq_q2: '我会得到什么格式的文件？',
     faq_a2: '你的签名会以高质量的透明背景 PNG 下载。',
     faq_q3: '需要安装特殊软件吗？',
