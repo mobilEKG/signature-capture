@@ -27,4 +27,19 @@ describe('SEO positioning copy', () => {
       'Free open source browser app for removing the paper background from a handwritten signature and saving it as a transparent PNG.',
     )
   })
+
+  it('renders crawlable homepage copy for the reviewed long-tail queries', () => {
+    const capture = readFileSync('src/pages/Capture.tsx', 'utf8')
+    const i18n = readFileSync('src/core/i18n.tsx', 'utf8')
+
+    for (const key of [
+      'home_seo_heading',
+      'home_seo_remove_background',
+      'home_seo_transparent_png',
+      'home_seo_no_upload',
+    ]) {
+      expect(capture).toContain(`t('${key}')`)
+      expect(i18n).toContain(`${key}:`)
+    }
+  })
 })

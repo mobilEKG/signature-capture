@@ -56,6 +56,22 @@ const translations: Record<Language, Record<string, string>> = {
     home_footer_privacy: ' privacy notes',
     home_footer_and: ' and',
     home_footer_about: ' project details',
+    home_seo_heading: 'Free signature background remover',
+    home_seo_intro:
+      'Turn a handwritten signature on paper into a transparent PNG directly in your browser. Use your camera, clean the paper background, then download or copy the finished signature image.',
+    home_seo_steps_heading: 'How it works',
+    home_seo_capture_title: 'Capture',
+    home_seo_capture_body:
+      'Place your handwritten signature inside the guide box and capture a frame from your phone or desktop camera.',
+    home_seo_remove_background: 'Remove the white paper background',
+    home_seo_remove_background_body:
+      'The app crops the guide area and converts the signature strokes into a black-on-transparent PNG.',
+    home_seo_transparent_png: 'Download a transparent PNG',
+    home_seo_transparent_png_body:
+      'Save the finished signature image for Word documents, PDFs, forms, and document overlays.',
+    home_seo_no_upload: 'No upload',
+    home_seo_no_upload_body:
+      'Signature images are processed locally in your browser. The app does not ask for an account and does not upload your signature.',
     period_sign: '.',
     instructions_meta_title: 'Instructions - Signature Capture',
     instructions_meta_description:
