@@ -26,6 +26,44 @@ const routes = [
     title: 'FAQ - Signature Capture',
     description:
       'Answers about transparent PNG signature downloads, browser-only processing, camera permissions, privacy, and open-source self-hosting.',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How do I remove the white background from a signature?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Use a dark pen on white paper, place the signature inside the guide box, tap Capture, then Clean. The app removes the paper background and keeps the signature strokes.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I make a handwritten signature transparent?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'After capture, the Clean and Save actions export the signature as a PNG with transparent background pixels.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I use the PNG in Word, PDF, or forms?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. The transparent PNG is designed for document overlays, forms, Word files, PDF workflows, and other places that accept image signatures.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is this a digital signature or only a signature image?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'This creates a transparent signature image. It is not a cryptographic digital signature and does not verify document identity or integrity.',
+          },
+        },
+      ],
+    },
   },
   {
     path: '/about',
@@ -126,15 +164,18 @@ const renderHead = (html, route) => {
     `<link rel="canonical" href="${canonical}" />`,
   )
 
-  if (route.path !== '/') {
+  const routeStructuredData =
+    route.path === '/' ? structuredData : route.structuredData
+
+  if (routeStructuredData) {
     next = next.replace(
       /<script type="application\/ld\+json">.*?<\/script>/s,
-      '',
+      `<script type="application/ld+json">\n      ${JSON.stringify(routeStructuredData, null, 6)}\n    </script>`,
     )
   } else {
     next = next.replace(
       /<script type="application\/ld\+json">.*?<\/script>/s,
-      `<script type="application/ld+json">\n      ${JSON.stringify(structuredData, null, 6)}\n    </script>`,
+      '',
     )
   }
 

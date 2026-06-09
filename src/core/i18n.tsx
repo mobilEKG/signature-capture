@@ -114,6 +114,21 @@ const translations: Record<Language, Record<string, string>> = {
     faq_meta_description:
       'Frequently asked questions about the Signature Capture tool.',
     faq_heading: 'Frequently Asked Questions',
+    faq_q_remove_white_background:
+      'How do I remove the white background from a signature?',
+    faq_a_remove_white_background:
+      'Use a dark pen on white paper, place the signature inside the guide box, tap Capture, then Clean. The app removes the paper background and keeps the signature strokes.',
+    faq_q_make_transparent:
+      'How do I make a handwritten signature transparent?',
+    faq_a_make_transparent:
+      'After capture, the Clean and Save actions export the signature as a PNG with transparent background pixels.',
+    faq_q_use_in_documents: 'Can I use the PNG in Word, PDF, or forms?',
+    faq_a_use_in_documents:
+      'Yes. The transparent PNG is designed for document overlays, forms, Word files, PDF workflows, and other places that accept image signatures.',
+    faq_q_digital_signature:
+      'Is this a digital signature or only a signature image?',
+    faq_a_digital_signature:
+      'This creates a transparent signature image. It is not a cryptographic digital signature and does not verify document identity or integrity.',
     faq_q2: 'What file format will I get?',
     faq_a2:
       'Your signature downloads as a high-quality PNG with a transparent background.',

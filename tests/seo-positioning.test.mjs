@@ -42,4 +42,23 @@ describe('SEO positioning copy', () => {
       expect(i18n).toContain(`${key}:`)
     }
   })
+
+  it('includes FAQ entries for reviewed signature background remover searches', () => {
+    const faq = readFileSync('src/pages/FAQ.tsx', 'utf8')
+    const i18n = readFileSync('src/core/i18n.tsx', 'utf8')
+    const prerender = readFileSync('scripts/prerender-static-routes.mjs', 'utf8')
+
+    for (const key of [
+      'faq_q_remove_white_background',
+      'faq_q_make_transparent',
+      'faq_q_use_in_documents',
+      'faq_q_digital_signature',
+    ]) {
+      expect(faq).toContain(`t('${key}')`)
+      expect(i18n).toContain(`${key}:`)
+    }
+
+    expect(faq).toContain("'@type': 'FAQPage'")
+    expect(prerender).toContain("'@type': 'FAQPage'")
+  })
 })
