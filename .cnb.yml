@@ -1,8 +1,7 @@
 # CNB CI/CD for Signature Capture.
 # Pull requests verify the application without changing the live Worker.
-# Main pushes repeat those checks and deploy the built static assets.
-# The deployment stage requires protected CNB secrets. It stops before
-# deployment when the Cloudflare token or account ID is missing.
+# Main pushes repeat those checks. Cloudflare deployment remains connected to
+# the GitHub backup mirror, so CNB does not need Cloudflare credentials.
 
 main:
   pull_request:
@@ -22,9 +21,9 @@ main:
           script: npm run check
 
   push:
-    - name: Verify and deploy main
+    - name: Verify main
       docker:
-        # Use the same runtime for verification and deployment for repeatability.
+        # Use the same runtime as pull requests for repeatable validation.
         image: node:22-bookworm-slim
         volumes:
           - /root/.npm
@@ -35,23 +34,6 @@ main:
             npm ci --cache /root/.npm --prefer-offline --no-audit --fund=false
         - name: Run checks
           script: npm run check
-        - name: Verify deployment secrets
-          script: |
-            set -eu
-            # Fail before Wrangler runs so a misconfigured pipeline cannot
-            # publish an incomplete or unauthenticated deployment.
-            test -n "${CLOUDFLARE_API_TOKEN:-}" || {
-              echo "CLOUDFLARE_API_TOKEN is not configured in CNB."
-              exit 1
-            }
-            test -n "${CLOUDFLARE_ACCOUNT_ID:-}" || {
-              echo "CLOUDFLARE_ACCOUNT_ID is not configured in CNB."
-              exit 1
-            }
-        - name: Deploy to Cloudflare Workers
-          script: |
-            set -eu
-            npm run deploy
 
 # Tags are release points. They receive the same verification as main, but do
 # not deploy or mutate a release asset because this project ships a hosted app.

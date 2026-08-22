@@ -176,7 +176,7 @@ beacon on public hostnames; localhost previews skip it even when a token exists.
 
 ## CNB CI/CD
 
-CNB is the main repository and CI/CD platform for this project. GitHub remains a backup mirror.
+CNB is the main repository and CI platform for this project. GitHub remains the exact backup mirror and the Cloudflare deployment source.
 
 CNB repository: https://cnb.cool/CodeAnt-2026/signature-capture/
 
@@ -185,18 +185,22 @@ GitHub backup: https://github.com/mobilEKG/signature-capture/
 The root `.cnb.yml` pipeline does the following:
 
 * Pull requests run lint, tests, and a production build.
-* Pushes to `main` run the same checks and deploy the static app to Cloudflare Workers.
+* Pushes to `main` run the same checks without using Cloudflare credentials.
 * Git tags run the full verification suite before they are treated as release points.
 
-Configure these CNB variables as protected secrets before enabling main deployment:
+Cloudflare Workers Builds remains connected to the GitHub repository. Cloudflare does not currently support CNB as a native Git provider, so a Cloudflare deployment occurs after the exact reviewed CNB `main` commit is mirrored to GitHub `main`. Keep Cloudflare's production branch set to `main`.
 
-* `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with permission to deploy this Worker.
-* `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID that owns the Worker.
-* `VITE_CLOUDFLARE_ANALYTICS_TOKEN`: optional Web Analytics token.
+Do not add Cloudflare deployment credentials to CNB. Keep the existing Cloudflare build settings, variables, secrets, and deployment commands in Cloudflare. See [Cloudflare Git integration](https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/) and [Cloudflare build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
 
-Never commit these values. A missing required deployment secret fails the main pipeline before any deployment attempt.
+When mirroring a release, verify that CNB and GitHub point to the same commit before Cloudflare receives the GitHub push:
 
-The deployment target is defined by [`wrangler.toml`](./wrangler.toml). CNB should be treated as the source of truth for new commits. Keep the GitHub backup at the same commit when mirroring changes.
+```bash
+git fetch origin main
+git fetch github main
+test "$(git rev-parse origin/main)" = "$(git rev-parse github/main)"
+```
+
+The deployment target is defined by [`wrangler.toml`](./wrangler.toml). CNB is the source of truth for new commits, and GitHub must remain at the same commit when changes are mirrored.
 
 ## Privacy Model
 

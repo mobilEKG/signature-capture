@@ -136,7 +136,7 @@ Cloudflare Web Analytics 只在部署环境提供令牌时启用。请在部署�
 
 ## CNB CI/CD
 
-CNB 是本项目的主仓库和 CI/CD 平台，GitHub 保留为备份镜像。
+CNB 是本项目的主仓库和 CI 平台，GitHub 保留为精确备份镜像，并继续作为 Cloudflare 的部署来源。
 
 CNB 仓库：https://cnb.cool/CodeAnt-2026/signature-capture/
 
@@ -145,18 +145,22 @@ GitHub 备份：https://github.com/mobilEKG/signature-capture/
 根目录的 `.cnb.yml` 会执行以下流程：
 
 * 合并请求运行 lint、测试和生产构建。
-* 推送到 `main` 后重复这些检查，并部署到 Cloudflare Workers。
+* 推送到 `main` 后重复这些检查，不使用 Cloudflare 凭据。
 * Git 标签运行完整检查，作为发布点验证，但不会重复部署。
 
-在 CNB 中将以下变量配置为受保护的秘密变量，然后再启用主分支部署：
+Cloudflare Workers Builds 继续连接 GitHub 仓库。Cloudflare 目前不支持将 CNB 作为原生 Git 提供商，因此只有在经过审核的 CNB `main` 提交被精确镜像到 GitHub `main` 后，Cloudflare 才会部署。请将 Cloudflare 的生产分支保持为 `main`。
 
-* `CLOUDFLARE_API_TOKEN`：具有本 Worker 部署权限的 Cloudflare API 令牌。
-* `CLOUDFLARE_ACCOUNT_ID`：拥有此 Worker 的 Cloudflare 账户 ID。
-* `VITE_CLOUDFLARE_ANALYTICS_TOKEN`：可选的 Web Analytics 令牌。
+不要将 Cloudflare 部署凭据添加到 CNB。继续在 Cloudflare 中保存现有的构建设置、变量、秘密和部署命令。请参考 [Cloudflare Git 集成](https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/) 和 [Cloudflare 构建配置](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。
 
-不要将这些值提交到仓库。缺少必要部署秘密时，主分支流水线会在运行 Wrangler 前失败。
+镜像发布版本时，请在 GitHub 收到推送前验证 CNB 和 GitHub 指向同一个提交：
 
-部署目标由 [`wrangler.toml`](./wrangler.toml) 定义。新的提交应以 CNB 为准，GitHub 备份应保持相同的提交。
+```bash
+git fetch origin main
+git fetch github main
+test "$(git rev-parse origin/main)" = "$(git rev-parse github/main)"
+```
+
+部署目标由 [`wrangler.toml`](./wrangler.toml) 定义。新的提交应以 CNB 为准，GitHub 镜像必须保持相同的提交。
 
 ## 隐私模型
 
