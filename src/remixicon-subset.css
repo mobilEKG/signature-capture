@@ -1,0 +1,62 @@
+/*
+ * Remix Icon v4.9.1, MIT-compatible Remix Icon License 1.0.
+ * The application uses these 35 line icons only. Importing the package
+ * stylesheet also ships unused EOT, TTF, WOFF, and SVG formats, which adds
+ * several megabytes to the production asset set. Keep only WOFF2 and the
+ * glyph mappings referenced by the source tree.
+ */
+@font-face {
+  font-family: 'remixicon';
+  src: url('remixicon/fonts/remixicon.woff2') format('woff2');
+  font-display: swap;
+}
+
+[class^='ri-'],
+[class*=' ri-'] {
+  font-family: 'remixicon' !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ri-lg {
+  font-size: 1.3333em;
+  line-height: 0.75em;
+  vertical-align: -0.0667em;
+}
+
+.ri-android-line:before { content: '\ea36'; }
+.ri-apple-line:before { content: '\ea40'; }
+.ri-ball-pen-line:before { content: '\ea8e'; }
+.ri-camera-lens-line:before { content: '\eb30'; }
+.ri-camera-line:before { content: '\eb31'; }
+.ri-camera-off-line:before { content: '\eb33'; }
+.ri-camera-switch-line:before { content: '\eb35'; }
+.ri-close-line:before { content: '\eb99'; }
+.ri-code-s-slash-line:before { content: '\ebad'; }
+.ri-computer-line:before { content: '\ebca'; }
+.ri-contrast-drop-line:before { content: '\ebd8'; }
+.ri-download-2-line:before { content: '\ec54'; }
+.ri-eraser-line:before { content: '\ec9f'; }
+.ri-error-warning-line:before { content: '\eca1'; }
+.ri-eye-line:before { content: '\ecb5'; }
+.ri-file-copy-2-line:before { content: '\ecd3'; }
+.ri-file-image-line:before { content: '\f3c4'; }
+.ri-file-warning-line:before { content: '\ed19'; }
+.ri-focus-3-line:before { content: '\ed4c'; }
+.ri-guide-line:before { content: '\ede5'; }
+.ri-information-line:before { content: '\ee59'; }
+.ri-install-line:before { content: '\ee68'; }
+.ri-landscape-line:before { content: '\ee7d'; }
+.ri-lightbulb-flash-line:before { content: '\eea8'; }
+.ri-line-chart-line:before { content: '\eeab'; }
+.ri-lock-line:before { content: '\eece'; }
+.ri-menu-line:before { content: '\ef3e'; }
+.ri-pencil-line:before { content: '\efe0'; }
+.ri-question-answer-line:before { content: '\f043'; }
+.ri-shield-check-line:before { content: '\f100'; }
+.ri-shield-keyhole-line:before { content: '\f107'; }
+.ri-shield-user-line:before { content: '\f10c'; }
+.ri-smartphone-line:before { content: '\f15a'; }
+.ri-sun-line:before { content: '\f1bf'; }
+.ri-user-line:before { content: '\f264'; }
