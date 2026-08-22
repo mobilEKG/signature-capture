@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Runtime: Cloudflare Workers](https://img.shields.io/badge/Runtime-Cloudflare%20Workers-f38020.svg)](https://developers.cloudflare.com/workers/static-assets/)
 
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
 Free open source browser app for removing the paper background from a handwritten signature and saving it as a transparent PNG.
 
 The app uses your phone or desktop camera, crops the signature guide area, removes the paper background locally in your browser, and lets you download the cleaned image. Captured images are not uploaded.
@@ -31,6 +33,7 @@ Your signature image is processed locally in your browser. No account is require
 - [Local Test Environment](#local-test-environment)
 - [Build](#build)
 - [Deploy](#deploy)
+- [CNB CI/CD](#cnb-cicd)
 - [Privacy Model](#privacy-model)
 - [Contributing](#contributing)
 - [License](#license)
@@ -170,6 +173,30 @@ npm run deploy
 Cloudflare Web Analytics is opt-in for deployments. Set
 `VITE_CLOUDFLARE_ANALYTICS_TOKEN` in the deployment environment to load the
 beacon on public hostnames; localhost previews skip it even when a token exists.
+
+## CNB CI/CD
+
+CNB is the main repository and CI/CD platform for this project. GitHub remains a backup mirror.
+
+CNB repository: https://cnb.cool/CodeAnt-2026/signature-capture/
+
+GitHub backup: https://github.com/mobilEKG/signature-capture/
+
+The root `.cnb.yml` pipeline does the following:
+
+* Pull requests run lint, tests, and a production build.
+* Pushes to `main` run the same checks and deploy the static app to Cloudflare Workers.
+* Git tags run the full verification suite before they are treated as release points.
+
+Configure these CNB variables as protected secrets before enabling main deployment:
+
+* `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with permission to deploy this Worker.
+* `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID that owns the Worker.
+* `VITE_CLOUDFLARE_ANALYTICS_TOKEN`: optional Web Analytics token.
+
+Never commit these values. A missing required deployment secret fails the main pipeline before any deployment attempt.
+
+The deployment target is defined by [`wrangler.toml`](./wrangler.toml). CNB should be treated as the source of truth for new commits. Keep the GitHub backup at the same commit when mirroring changes.
 
 ## Privacy Model
 
