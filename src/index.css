@@ -1,4 +1,5 @@
-@import 'remixicon/fonts/remixicon.css';
+/* Keep the production icon payload limited to the glyphs used by the app. */
+@import './remixicon-subset.css';
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
